@@ -1,1 +1,51 @@
-<p>patient-login works!</p>
+<div class="login-page min-vh-100 position-relative overflow-hidden text-light">
+  <div class="login-bg"></div>
+
+  <div class="container position-relative z-3 py-5">
+    <div class="row justify-content-center">
+      <div class="col-lg-6 col-xl-5">
+        <div class="login-card animate-on-scroll">
+          <h2 class="fw-bold text-center mb-4 text-white">Patient Login</h2>
+          <p class="text-center text-white-75 mb-5">
+            Sign in to access your portal and manage bookings.
+          </p>
+
+          <!-- Error Message -->
+          <div *ngIf="errorMessage" class="alert alert-danger mb-4">
+            {{ errorMessage }}
+          </div>
+
+          <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+            <div class="mb-4">
+              <input type="email" class="form-control" placeholder="Email Address *" formControlName="email"
+                [class.is-invalid]="submitted && f['email'].errors" />
+              <div *ngIf="submitted && f['email'].errors" class="invalid-feedback">
+                Valid email required.
+              </div>
+            </div>
+
+            <div class="mb-4">
+              <input type="password" class="form-control" placeholder="Password *" formControlName="password"
+                [class.is-invalid]="submitted && f['password'].errors" />
+              <div *ngIf="submitted && f['password'].errors" class="invalid-feedback">
+                Password required.
+              </div>
+            </div>
+
+            <div class="text-center mt-5">
+              <button type="submit" class="btn btn-primary btn-lg px-5 py-3"
+                [disabled]="loginForm.invalid || isLoading">
+                <span *ngIf="isLoading" class="spinner-border spinner-border-sm me-2"></span>
+                {{ isLoading ? 'Signing In...' : 'Login' }}
+              </button>
+            </div>
+          </form>
+
+          <p class="text-center mt-4 text-white-75">
+            Don't have an account? <a routerLink="/patient/register" class="text-primary">Sign Up</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

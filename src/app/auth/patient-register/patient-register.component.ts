@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-patient-register',
@@ -11,20 +12,17 @@ export class PatientRegisterComponent {
   submitted = false;
   isLoading = false;
 
-  constructor(private fb: FormBuilder) {
+  constructor(
+    private fb: FormBuilder,
+    private router: Router
+  ) {
     this.registerForm = this.fb.group({
       fullName: ['', [Validators.required, Validators.minLength(2)]],
       phone: ['', [Validators.required, Validators.pattern('^[+]?[0-9]{10,15}$')]],
       email: ['', [Validators.required, Validators.email]],
       age: ['', [Validators.required, Validators.min(1)]],
-      gender: ['', Validators.required],
       location: ['', Validators.required],
-      forWhom: ['self', Validators.required],
-      otherPerson: [''],
-      consultationType: ['', Validators.required],
-      specialist: ['', Validators.required],
-      timeframe: ['', Validators.required],
-      paymentMethod: ['', Validators.required]
+      gender: ['', Validators.required]
     });
   }
 
@@ -36,12 +34,24 @@ export class PatientRegisterComponent {
 
     this.isLoading = true;
 
-    // Simulate registration
-    setTimeout(() => {
-      console.log('Patient Registered:', this.registerForm.value);
+    // Simulate registration (replace with real backend later)
+    const userData = this.registerForm.value;
+
+    // Check for duplicate email (simple local check for now)
+    const existingUsers = JSON.parse(localStorage.getItem('users') || '[]');
+    if (existingUsers.some((u: any) => u.email === userData.email)) {
+      alert('This email is already registered. Please login.');
       this.isLoading = false;
-      // Redirect to login or dashboard
-      // this.router.navigate(['/patient/login']);
-    }, 2000);
+      return;
+    }
+
+    // Save user (simple local storage for now)
+    existingUsers.push({ ...userData, password: 'default123' }); // Add password later
+    localStorage.setItem('users', JSON.stringify(existingUsers));
+
+    this.isLoading = false;
+
+    // Redirect to login
+    this.router.navigate(['/patient/login']);
   }
 }
