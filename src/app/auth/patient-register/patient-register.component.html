@@ -1,16 +1,18 @@
+
 <div class="register-page min-vh-100 position-relative overflow-hidden text-light">
   <div class="register-bg"></div>
 
-  <div class="container position-relative z-2 py-5">
+  <div class="container position-relative z-3 py-5"> <!-- z-3 to bring above bg -->
     <div class="row justify-content-center">
       <div class="col-lg-8 col-xl-6">
         <div class="register-card animate-on-scroll">
-          <h2 class="fw-bold text-center mb-4">Patient Sign Up</h2>
+          <h2 class="fw-bold text-center mb-4 text-white">Patient Sign Up</h2>
           <p class="text-center text-white-75 mb-5">
             Complete the form below to book your consultation and create your account.
           </p>
 
-          <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+          <!-- Form here (your existing form) -->
+           <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
             <!-- A. PATIENT INFORMATION -->
             <h5 class="mt-5 mb-3">Patient Information</h5>
             <div class="row g-3">
@@ -178,3 +180,10 @@
     </div>
   </div>
 </div>
+
+
+
+
+
+
+

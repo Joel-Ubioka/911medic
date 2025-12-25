@@ -9,8 +9,8 @@ const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'services', component: ServicesComponent },
   { path: 'how-it-works', component: HowItWorksComponent },
-  { path: 'contact', component: ContactComponent },
-  { path: '**', redirectTo: '' }
+  { path: 'contact', component: ContactComponent }
+  // REMOVE THIS: { path: '**', redirectTo: '' }
 ];
 
 @NgModule({
