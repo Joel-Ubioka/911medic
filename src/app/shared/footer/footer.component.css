@@ -1,0 +1,74 @@
+/* PREMIUM FOOTER */
+.premium-footer {
+  background: #0a1f44; /* Dark premium base */
+  position: relative;
+}
+
+.footer-bg {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, #0d6efd 0%, #c0392b 50%, #0d6efd 100%);
+  opacity: 0.12;
+  z-index: 1;
+}
+
+.premium-footer .container {
+  z-index: 2;
+}
+
+.social-icons {
+  margin-top: 1.5rem;
+}
+
+.social-link {
+  width: 40px;
+  height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  color: #fff;
+  transition: all 0.3s ease;
+  text-decoration: none;
+}
+
+.social-link:hover {
+  background: rgba(13, 110, 253, 0.6);
+  transform: translateY(-3px);
+}
+
+.footer-links a,
+.footer-contact a {
+  color: #e0e0e0;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  display: block;
+  padding: 0.4rem 0;
+}
+
+.footer-links a:hover,
+.footer-contact a:hover {
+  color: #0d6efd;
+  padding-left: 8px;
+}
+
+.newsletter-form .form-control {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #fff;
+}
+
+.newsletter-form .form-control::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.newsletter-form .btn-primary {
+  background: linear-gradient(135deg, #0d6efd, #0b5ed7);
+  border: none;
+}
+
+.newsletter-form .btn-primary:hover {
+  background: linear-gradient(135deg, #0b5ed7, #0d6efd);
+  transform: translateY(-2px);
+}

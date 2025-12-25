@@ -1,0 +1,213 @@
+<!-- Navbar -->
+<app-navbar></app-navbar>
+
+<!-- HERO SECTION -->
+<!-- HERO SECTION -->
+<section class="hero-section d-flex align-items-center text-light position-relative">
+  <!-- Background Video -->
+  <video class="hero-video" autoplay loop muted playsinline poster="">
+    <source src="../../../assets/videos/med_video.mp4" type="video/mp4">
+    <!-- Optional: Add WebM for better compression/support -->
+    <!-- <source src="../../../assets/videos/med_video.webm" type="video/webm"> -->
+    Your browser does not support the video tag.
+  </video>
+
+  <!-- Semi-transparent overlay -->
+  <div class="hero-overlay"></div>
+
+  <div class="container text-center position-relative z-2">
+    <h1 class="display-4 fw-bold animate__animated animate__fadeInDown">
+      Fast Medical Help, Anytime, Anywhere
+    </h1>
+    <p class="lead animate__animated animate__fadeInUp">
+      911Medic connects you to qualified medical specialists and emergency services — online, physical, and on-ground — when every second counts.
+    </p>
+    
+    <!-- Updated buttons: stacked on mobile, equal width, good spacing -->
+    <div class="mt-4 d-grid gap-3 col-12 col-md-8 mx-auto">
+      <a routerLink="/patient/login" class="btn btn-primary btn-lg animate__animated animate__zoomIn">Book Consultation</a>
+      <a href="https://wa.me/YOURNUMBER" target="_blank" class="btn btn-danger btn-lg animate__animated animate__zoomIn">Emergency Help</a>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES SECTION -->
+<!-- SERVICES SECTION – Premium Slider Layout -->
+<section class="services-section py-5 position-relative overflow-hidden">
+  <!-- Background Gradient -->
+  <div class="services-bg"></div>
+
+  <div class="container position-relative z-2">
+    <div class="row align-items-center g-5">
+      <!-- Left: Premium Write-up -->
+      <div class="col-lg-5">
+        <div class="services-text animate-on-scroll" data-delay="0">
+          <h2 class="fw-bold display-5 mb-4 text-white" style="text-shadow: 0 2px 12px rgba(0,0,0,0.5);">
+            Comprehensive Medical Services
+          </h2>
+          <p class="lead text-white-75 mb-4" style="color: white;">
+            911Medic delivers fast, reliable, and compassionate care through innovative solutions tailored to your needs.
+          </p>
+          <ul class="services-benefits list-unstyled">
+            <li><i class="bi bi-check-circle-fill me-3"></i>24/7 access to qualified specialists</li>
+            <li><i class="bi bi-check-circle-fill me-3"></i>Secure online & in-person consultations</li>
+            <li><i class="bi bi-check-circle-fill me-3"></i>Rapid emergency response & transport</li>
+            <li><i class="bi bi-check-circle-fill me-3"></i>Affordable, transparent pricing</li>
+          </ul>
+          <a href="#contact" class="btn btn-outline-light mt-4">Learn More</a>
+        </div>
+      </div>
+
+      <!-- Right: Slider with Cards -->
+      <div class="col-lg-7">
+        <div class="swiper services-slider animate-on-scroll" data-delay="1">
+          <div class="swiper-wrapper">
+            <!-- Slide 1 -->
+            <div class="swiper-slide">
+              <div class="service-card">
+                <div class="card-content">
+                  <i class="bi bi-telephone-fill service-icon"></i>
+                  <h5>Online Specialist Consultation</h5>
+                  <p>Speak to experienced doctors from the comfort of your home. Fast, confidential, and affordable.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Slide 2 -->
+            <div class="swiper-slide">
+              <div class="service-card">
+                <div class="card-content">
+                  <i class="bi bi-person-fill service-icon"></i>
+                  <h5>Physical Specialist Consultation</h5>
+                  <p>Book in-person appointments at carefully selected healthcare facilities within 24–48 hours.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Slide 3 -->
+            <div class="swiper-slide">
+              <div class="service-card">
+                <div class="card-content">
+                  <i class="bi bi-heart-pulse-fill service-icon"></i>
+                  <h5>Emergency Medical Services</h5>
+                  <p>Rapid medical response for urgent health situations with priority care.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Slide 4 -->
+            <div class="swiper-slide">
+              <div class="service-card">
+                <div class="card-content">
+                  <i class="bi bi-truck-flatbed service-icon"></i>
+                  <h5>Ambulance & Transport</h5>
+                  <p>Patient transport, hospital transfers, and event standby coverage with professional teams.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Navigation & Pagination -->
+          <div class="swiper-button-next"></div>
+          <div class="swiper-button-prev"></div>
+          <div class="swiper-pagination"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS SECTION -->
+<section class="how-it-works-section py-5 position-relative overflow-hidden">
+  <!-- Subtle Background Gradient -->
+  <div class="hiw-bg"></div>
+
+  <div class="container position-relative z-2">
+    <h2 class="text-center mb-5 fw-bold display-5 text-white" style="text-shadow: 0 2px 12px rgba(0,0,0,0.5);">
+      How It Works
+    </h2>
+
+    <!-- Timeline Container -->
+    <div class="timeline-container">
+      <div class="timeline-line"></div> <!-- Connecting line -->
+
+      <div class="row justify-content-between g-0">
+        <!-- Step 1 -->
+        <div class="col-6 col-md-2 text-center">
+          <div class="timeline-step animate-on-scroll" data-delay="0">
+            <div class="step-circle">
+              <span class="step-number">1</span>
+            </div>
+            <p class="step-text mt-4">Choose consultation type</p>
+          </div>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="col-6 col-md-2 text-center">
+          <div class="timeline-step animate-on-scroll" data-delay="1">
+            <div class="step-circle">
+              <span class="step-number">2</span>
+            </div>
+            <p class="step-text mt-4">Select a specialist</p>
+          </div>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="col-6 col-md-2 text-center">
+          <div class="timeline-step animate-on-scroll" data-delay="2">
+            <div class="step-circle">
+              <span class="step-number">3</span>
+            </div>
+            <p class="step-text mt-4">Make payment</p>
+          </div>
+        </div>
+
+        <!-- Step 4 -->
+        <div class="col-6 col-md-2 text-center">
+          <div class="timeline-step animate-on-scroll" data-delay="3">
+            <div class="step-circle">
+              <span class="step-number">4</span>
+            </div>
+            <p class="step-text mt-4">Get connected / receive venue</p>
+          </div>
+        </div>
+
+        <!-- Step 5 -->
+        <div class="col-6 col-md-2 text-center">
+          <div class="timeline-step animate-on-scroll" data-delay="4">
+            <div class="step-circle">
+              <span class="step-number">5</span>
+            </div>
+            <p class="step-text mt-4">Receive professional care</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EMERGENCY BANNER -->
+<app-emergency-banner></app-emergency-banner>
+
+<!-- SPECIALIST CTA (Premium Join Us Section) -->
+<section class="specialist-cta py-5 position-relative overflow-hidden text-center text-light">
+  <!-- Background Gradient -->
+  <div class="specialist-bg"></div>
+
+  <div class="container position-relative z-2">
+    <div class="specialist-content animate-on-scroll">
+      <h3 class="mb-3 fw-bold display-5 text-white" style="text-shadow: 0 2px 12px rgba(0,0,0,0.4);">
+        Are You a Medical Specialist?
+      </h3>
+      <p class="lead mb-4 fw-light text-white-75">
+        Join 911Medic and connect directly with patients who need your expertise — anytime, anywhere.
+      </p>
+      <a routerLink="/specialist/register" class="btn btn-specialist btn-lg px-5 py-3">
+        <i class="bi bi-person-plus-fill me-2"></i> Join as a Specialist
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<app-footer></app-footer>
