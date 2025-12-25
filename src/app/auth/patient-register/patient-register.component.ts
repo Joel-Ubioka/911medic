@@ -34,10 +34,9 @@ export class PatientRegisterComponent {
 
     this.isLoading = true;
 
-    // Simulate registration (replace with real backend later)
     const userData = this.registerForm.value;
 
-    // Check for duplicate email (simple local check for now)
+    // Check for duplicate email
     const existingUsers = JSON.parse(localStorage.getItem('users') || '[]');
     if (existingUsers.some((u: any) => u.email === userData.email)) {
       alert('This email is already registered. Please login.');
@@ -45,8 +44,8 @@ export class PatientRegisterComponent {
       return;
     }
 
-    // Save user (simple local storage for now)
-    existingUsers.push({ ...userData, password: 'default123' }); // Add password later
+    // Save user (no password)
+    existingUsers.push(userData);
     localStorage.setItem('users', JSON.stringify(existingUsers));
 
     this.isLoading = false;

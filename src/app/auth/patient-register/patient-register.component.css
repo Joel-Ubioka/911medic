@@ -64,3 +64,13 @@
   opacity: 1 !important; /* Force show even if animation fails */
   transform: translateY(0) !important;
 }
+
+/* Fix dropdown visibility */
+.form-select {
+  color: #fff !important;
+}
+
+.form-select option {
+  color: #000 !important; /* Black text for dropdown options */
+  background: #fff !important; /* White background */
+}

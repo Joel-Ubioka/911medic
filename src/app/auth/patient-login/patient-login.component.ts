@@ -18,8 +18,8 @@ export class PatientLoginComponent {
     private router: Router
   ) {
     this.loginForm = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', Validators.required]
+      fullName: ['', [Validators.required, Validators.minLength(2)]],
+      email: ['', [Validators.required, Validators.email]]
     });
   }
 
@@ -32,15 +32,17 @@ export class PatientLoginComponent {
     this.isLoading = true;
     this.errorMessage = '';
 
-    // Simple local login (replace with real auth later)
     const users = JSON.parse(localStorage.getItem('users') || '[]');
-    const user = users.find((u: any) => u.email === this.f['email'].value && u.password === this.f['password'].value);
+    const user = users.find((u: any) => 
+      u.fullName.toLowerCase() === this.f['fullName'].value.toLowerCase() &&
+      u.email === this.f['email'].value
+    );
 
     if (user) {
       localStorage.setItem('currentUser', JSON.stringify(user));
       this.router.navigate(['/patient']);
     } else {
-      this.errorMessage = 'Invalid email or password';
+      this.errorMessage = 'Invalid full name or email.';
       this.isLoading = false;
     }
   }
