@@ -1,0 +1,107 @@
+/* HOW IT WORKS PAGE – Premium Design */
+.how-it-works-page {
+  background: #0a1f44; /* Dark premium base */
+  color: #f8f9fa;
+  position: relative;
+}
+
+.how-bg {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, #0d6efd 0%, #c0392b 50%, #0d6efd 100%);
+  opacity: 0.15;
+  z-index: 1;
+}
+
+.how-it-works-page .container {
+  z-index: 2;
+}
+
+/* Timeline */
+.timeline-container {
+  position: relative;
+  padding: 4rem 0;
+}
+
+.timeline-line {
+  position: absolute;
+  top: 50px;
+  left: 10%;
+  right: 10%;
+  height: 4px;
+  background: linear-gradient(to right, #0d6efd, #c0392b);
+  border-radius: 2px;
+  z-index: 1;
+  opacity: 0.6;
+}
+
+.timeline-step {
+  position: relative;
+  z-index: 2;
+  transition: all 0.6s ease-out;
+  opacity: 0;
+  transform: translateY(50px);
+}
+
+.timeline-step.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.step-circle {
+  width: 100px;
+  height: 100px;
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(12px);
+  border: 2px solid rgba(255, 255, 255, 0.15);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.5rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  transition: all 0.4s ease;
+}
+
+.timeline-step:hover .step-circle {
+  transform: scale(1.15);
+  box-shadow: 0 15px 40px rgba(13, 110, 253, 0.4);
+}
+
+.step-number {
+  font-size: 3rem;
+  font-weight: 900;
+  background: linear-gradient(135deg, #0d6efd, #c0392b);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.timeline-step h4 {
+  color: #fff;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.timeline-step p {
+  color: #e0e0e0;
+  font-size: 1.1rem;
+  line-height: 1.5;
+}
+
+/* Responsive */
+@media (max-width: 991px) {
+  .timeline-line {
+    display: none; /* Hide line on smaller screens */
+  }
+  .step-circle {
+    width: 80px;
+    height: 80px;
+  }
+  .step-number {
+    font-size: 2.2rem;
+  }
+}
+
+#text:hover{
+  color: #c0392b !important;
+}

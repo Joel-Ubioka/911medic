@@ -4,9 +4,13 @@ import { RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   {
     path: '',
-    loadChildren: () =>
-      import('./public/public.module').then(m => m.PublicModule)
-  }
+    loadChildren: () => import('./public/public.module').then(m => m.PublicModule)
+  },
+  {
+    path: 'patient',
+    loadChildren: () => import('./patient/patient.module').then(m => m.PatientModule)
+  },
+  { path: '**', redirectTo: '' }
 ];
 
 @NgModule({

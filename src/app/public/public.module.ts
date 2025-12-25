@@ -7,6 +7,7 @@ import { ServicesComponent } from './services/services.component';
 import { HowItWorksComponent } from './how-it-works/how-it-works.component';
 import { ContactComponent } from './contact/contact.component';
 import { SharedModule } from '../shared/shared.module';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -19,6 +20,7 @@ import { SharedModule } from '../shared/shared.module';
   imports: [
     CommonModule,
     PublicRoutingModule,
+    ReactiveFormsModule,
      SharedModule
   ]
 })

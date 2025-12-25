@@ -1,1 +1,163 @@
-<p>contact works!</p>
+<!-- Navbar -->
+<app-navbar></app-navbar>
+
+<!-- CONTACT PAGE – Premium Layout -->
+<div class="contact-page min-vh-100 position-relative overflow-hidden text-light">
+  <!-- Background Gradient -->
+  <div class="contact-bg"></div>
+
+  <div class="container position-relative z-2 py-5">
+    <!-- Hero Section -->
+    <div class="text-center mb-5">
+      <h1 class="display-4 fw-bold animate-on-scroll text-white mb-3" style="color: brown !important;">
+        Get in Touch
+      </h1>
+      <p class="lead text-white-75 animate-on-scroll" data-delay="1">
+        We're here to help 24/7. Reach out for any inquiries, emergencies, or feedback.
+      </p>
+    </div>
+
+    <div class="row g-5">
+      <!-- Left: Contact Information & Social Links -->
+      <div class="col-lg-5">
+        <div class="contact-info animate-on-scroll" data-delay="0">
+          <h3 class="fw-bold mb-4">Contact Us</h3>
+
+          <div class="contact-item mb-4">
+            <i class="bi bi-whatsapp fs-4 me-3 text-primary"></i>
+            <div>
+              <h6 class="mb-1">WhatsApp / Emergency Hotline</h6>
+              <p class="mb-0">+234 803 XXX XXXX</p>
+            </div>
+          </div>
+
+          <div class="contact-item mb-4">
+            <i class="bi bi-telephone-fill fs-4 me-3 text-primary"></i>
+            <div>
+              <h6 class="mb-1">Phone Support</h6>
+              <p class="mb-0">+234 802 XXX XXXX (24/7)</p>
+            </div>
+          </div>
+
+          <div class="contact-item mb-4">
+            <i class="bi bi-envelope-fill fs-4 me-3 text-primary"></i>
+            <div>
+              <h6 class="mb-1">Email</h6>
+              <p class="mb-0">support@911medic.com</p>
+              <small class="text-white-75">We reply within 24 hours</small>
+            </div>
+          </div>
+
+          <div class="contact-item mb-4">
+            <i class="bi bi-geo-alt-fill fs-4 me-3 text-primary"></i>
+            <div>
+              <h6 class="mb-1">Address</h6>
+              <p class="mb-0">Lagos, Nigeria</p>
+              <small class="text-white-75">Headquarters & Operations</small>
+            </div>
+          </div>
+
+          <!-- Social Links -->
+          <div class="social-links mt-4">
+            <h6 class="mb-3">Follow Us</h6>
+            <div class="d-flex gap-3">
+              <a href="#" class="social-icon"><i class="bi bi-facebook"></i></a>
+              <a href="#" class="social-icon"><i class="bi bi-twitter-x"></i></a>
+              <a href="#" class="social-icon"><i class="bi bi-instagram"></i></a>
+              <a href="#" class="social-icon"><i class="bi bi-linkedin"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      
+<!-- Right: Contact Form -->
+<div class="col-lg-7">
+  <div class="contact-form-card animate-on-scroll" data-delay="1">
+    <h3 class="fw-bold mb-4" style="color: brown;">Send Us a Message</h3>
+
+    <!-- Success Message -->
+    <div *ngIf="successMessage" class="alert alert-success alert-dismissible fade show" role="alert">
+      <strong>Thank you!</strong> Your message has been sent successfully. We'll get back to you soon.
+      <button type="button" class="btn-close" (click)="successMessage = false"></button>
+    </div>
+
+    <form [formGroup]="contactForm" (ngSubmit)="onSubmit()">
+      <div class="row g-3">
+        <!-- Name -->
+        <div class="col-md-6">
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Your Name"
+            formControlName="name"
+            [class.is-invalid]="submitted && f['name'].errors"
+          />
+          <div *ngIf="submitted && f['name'].errors" class="invalid-feedback">
+            Please enter your name (minimum 2 characters).
+          </div>
+        </div>
+
+        <!-- Email -->
+        <div class="col-md-6">
+          <input
+            type="email"
+            class="form-control"
+            placeholder="Your Email"
+            formControlName="email"
+            [class.is-invalid]="submitted && f['email'].errors"
+          />
+          <div *ngIf="submitted && f['email'].errors" class="invalid-feedback">
+            Please enter a valid email address.
+          </div>
+        </div>
+
+        <!-- Subject -->
+        <div class="col-12">
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Subject"
+            formControlName="subject"
+            [class.is-invalid]="submitted && f['subject'].errors"
+          />
+          <div *ngIf="submitted && f['subject'].errors" class="invalid-feedback">
+            Please enter a subject (minimum 3 characters).
+          </div>
+        </div>
+
+        <!-- Message -->
+        <div class="col-12">
+          <textarea
+            class="form-control"
+            rows="6"
+            placeholder="Your Message"
+            formControlName="message"
+            [class.is-invalid]="submitted && f['message'].errors"
+          ></textarea>
+          <div *ngIf="submitted && f['message'].errors" class="invalid-feedback">
+            Please enter a message (minimum 10 characters).
+          </div>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="col-12 text-end">
+          <button
+            type="submit"
+            class="btn btn-primary btn-lg px-5"
+            [disabled]="contactForm.invalid && submitted || isLoading" 
+          >
+            <span *ngIf="isLoading" class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+            {{ isLoading ? 'Sending...' : 'Send Message' }}
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<app-footer></app-footer>

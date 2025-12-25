@@ -58,55 +58,44 @@
       </ul>
 
       <!-- RIGHT ACTION BUTTONS -->
-      <div class="d-flex align-items-center gap-2 text-center">
+     <!-- RIGHT ACTION BUTTONS -->
+<div class="d-flex align-items-center gap-2 text-center">
+  <ng-container *ngIf="!isLoggedIn; else loggedInTemplate">
+    <!-- Get Started -->
+    <div class="dropdown">
+      <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+        Get Started
+      </button>
+      <ul class="dropdown-menu dropdown-menu-end">
+        <li><a class="dropdown-item" routerLink="/patient/register">Patient Sign Up</a></li>
+        <li><a class="dropdown-item" routerLink="/specialist/register">Specialist Sign Up</a></li>
+      </ul>
+    </div>
 
-        <!-- Get Started -->
-        <div class="dropdown">
-          <button
-            class="btn btn-primary dropdown-toggle"
-            type="button"
-            data-bs-toggle="dropdown"
-            aria-expanded="false">
-            Get Started
-          </button>
-          <ul class="dropdown-menu dropdown-menu-end">
-            <li>
-              <a class="dropdown-item" routerLink="/patient/register">
-                Patient Sign Up
-              </a>
-            </li>
-            <li>
-              <a class="dropdown-item" routerLink="/specialist/register">
-                Specialist Sign Up
-              </a>
-            </li>
-          </ul>
-        </div>
+    <!-- Login -->
+    <div class="dropdown">
+      <button class="btn btn-outline-primary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+        Login
+      </button>
+      <ul class="dropdown-menu dropdown-menu-end">
+        <li><a class="dropdown-item" routerLink="/patient/login">Patient Login</a></li>
+        <li><a class="dropdown-item" routerLink="/specialist/login">Specialist Login</a></li>
+      </ul>
+    </div>
+  </ng-container>
 
-        <!-- Login -->
-        <div class="dropdown">
-          <button
-            class="btn btn-outline-primary dropdown-toggle"
-            type="button"
-            data-bs-toggle="dropdown"
-            aria-expanded="false">
-            Login
-          </button>
-          <ul class="dropdown-menu dropdown-menu-end">
-            <li>
-              <a class="dropdown-item" routerLink="/patient/login">
-                Patient Login
-              </a>
-            </li>
-            <li>
-              <a class="dropdown-item" routerLink="/specialist/login">
-                Specialist Login
-              </a>
-            </li>
-          </ul>
-        </div>
-
-      </div>
+  <ng-template #loggedInTemplate>
+    <div class="dropdown">
+      <button class="btn btn-outline-primary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+        {{ userName }}
+      </button>
+      <ul class="dropdown-menu dropdown-menu-end">
+        <li><a class="dropdown-item" routerLink="/patient">Patient Portal</a></li>
+        <li><a class="dropdown-item" href="#">Logout</a></li>
+      </ul>
+    </div>
+  </ng-template>
+</div>
 
     </div>
   </div>
