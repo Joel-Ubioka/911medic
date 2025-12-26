@@ -10,13 +10,11 @@
   z-index: 1;
 }
 
-.animate-on-scroll {
-  opacity: 0;
-  transform: translateY(60px);
-  transition: opacity 0.9s ease-out, transform 0.9s ease-out;
+.container {
+  z-index: 3; /* Ensure content is above bg */
 }
 
-.animate-on-scroll.visible {
-  opacity: 1;
-  transform: translateY(0);
+.animate-on-scroll {
+  opacity: 1 !important; /* Force visible if animation fails */
+  transform: translateY(0) !important;
 }

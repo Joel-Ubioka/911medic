@@ -12,6 +12,10 @@ export class PatientRegisterComponent {
   submitted = false;
   isLoading = false;
 
+ // Simulate logged-in user (replace with real auth service later)
+  isLoggedIn = false; // Change to true for testing
+  userName = 'John Doe'; // Replace with real user name
+
   constructor(
     private fb: FormBuilder,
     private router: Router
