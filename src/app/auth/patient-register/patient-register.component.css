@@ -159,6 +159,17 @@
   font-weight: 600;
 }
 
+@media (max-width: 991px) {
+  .dropdown-menu {
+    border-radius: 12px;
+    min-width: 200px;
+  }
+
+  .btn.dropdown-toggle.w-100 {
+    text-align: left;
+  }
+}
+
 /* PREMIUM FOOTER */
 .premium-footer {
   background: #0a1f44; /* Dark premium base */

@@ -61,16 +61,21 @@
      <!-- RIGHT ACTION BUTTONS -->
 <div class="d-flex align-items-center gap-2 text-center">
   <ng-container *ngIf="!isLoggedIn; else loggedInTemplate">
-    <!-- Get Started -->
-    <div class="dropdown">
-      <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown">
-        Get Started
-      </button>
-      <ul class="dropdown-menu dropdown-menu-end">
-        <li><a class="dropdown-item" routerLink="/patient/register">Patient Sign Up</a></li>
-        <li><a class="dropdown-item" routerLink="/specialist/register">Specialist Sign Up</a></li>
-      </ul>
-    </div>
+   <!-- Get Started Dropdown (Mobile-Friendly) -->
+<div class="dropdown d-block d-lg-inline-block">
+  <button
+    class="btn btn-primary dropdown-toggle w-100 w-lg-auto"
+    type="button"
+    data-bs-toggle="dropdown"
+    aria-expanded="false">
+    Get Started
+  </button>
+  <ul class="dropdown-menu dropdown-menu-start dropdown-menu-lg-end mt-2 shadow">
+    <li><a class="dropdown-item py-2" routerLink="/patient/register">Patient Sign Up</a></li>
+    <li><hr class="dropdown-divider"></li>
+    <li><a class="dropdown-item py-2" routerLink="/specialist/register">Specialist Sign Up</a></li>
+  </ul>
+</div>
 
     <!-- Login -->
     <div class="dropdown">
