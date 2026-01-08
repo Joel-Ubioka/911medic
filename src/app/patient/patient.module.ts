@@ -8,6 +8,8 @@ import { PatientLoginComponent } from '../auth/patient-login/patient-login.compo
 import { PatientRegisterComponent } from '../auth/patient-register/patient-register.component';
 import { ConsultationBookingComponent } from './consultation-booking/consultation-booking.component';
 import { AmbulanceRequestComponent } from './ambulance-request/ambulance-request.component';
+// Import your SharedModule here
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -20,7 +22,8 @@ import { AmbulanceRequestComponent } from './ambulance-request/ambulance-request
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    PatientRoutingModule
+    PatientRoutingModule,
+    SharedModule
   ]
 })
 export class PatientModule { }

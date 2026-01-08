@@ -1,18 +1,22 @@
-<!-- patient/dashboard/dashboard.component.html -->
 <app-navbar></app-navbar>
 
 <div class="patient-dashboard min-vh-100 position-relative overflow-hidden text-light">
   <div class="dashboard-bg"></div>
 
   <div class="container position-relative z-3 py-5">
-    <h1 class="display-4 fw-bold animate-on-scroll text-center mb-5">
-      Welcome, {{ currentUser?.fullName || 'Patient' }}!
-    </h1>
+    <div class="text-center">
+      <h1 class="display-4 fw-bold mb-4 text-white">
+        Welcome, {{ currentUser?.fullName || 'Patient' }}!
+      </h1>
+      <p class="lead text-white-75 mb-5">
+        Manage your consultations, bookings, and more.
+      </p>
+    </div>
 
     <div class="row g-4 justify-content-center">
       <!-- Book Consultation -->
       <div class="col-md-6 col-lg-4">
-        <div class="dashboard-card animate-on-scroll">
+        <div class="dashboard-card">
           <div class="card-icon"><i class="bi bi-calendar-check"></i></div>
           <h3>Book Consultation</h3>
           <p>Schedule online or physical consultations with specialists.</p>
@@ -22,7 +26,7 @@
 
       <!-- Request Ambulance -->
       <div class="col-md-6 col-lg-4">
-        <div class="dashboard-card animate-on-scroll" data-delay="1">
+        <div class="dashboard-card">
           <div class="card-icon"><i class="bi bi-truck-flatbed"></i></div>
           <h3>Request Ambulance</h3>
           <p>Patient transport, hospital transfers, or event standby.</p>
@@ -32,21 +36,21 @@
 
       <!-- View Bookings -->
       <div class="col-md-6 col-lg-4">
-        <div class="dashboard-card animate-on-scroll" data-delay="2">
+        <div class="dashboard-card">
           <div class="card-icon"><i class="bi bi-list-check"></i></div>
           <h3>View Booking History</h3>
           <p>Review your past consultations and ambulance requests.</p>
-          <a routerLink="/patient/bookings" class="btn btn-outline-light mt-3">View History</a>
+          <button class="btn btn-outline-light mt-3" disabled>Coming Soon</button>
         </div>
       </div>
 
-      <!-- Notifications (Future) -->
+      <!-- Notifications -->
       <div class="col-md-6 col-lg-4">
-        <div class="dashboard-card animate-on-scroll" data-delay="3">
+        <div class="dashboard-card">
           <div class="card-icon"><i class="bi bi-bell-fill"></i></div>
           <h3>Notifications</h3>
           <p>Stay updated on bookings, payments, and health tips.</p>
-          <button class="btn btn-outline-light mt-3">View Notifications</button>
+          <button class="btn btn-outline-light mt-3" disabled>Coming Soon</button>
         </div>
       </div>
     </div>
