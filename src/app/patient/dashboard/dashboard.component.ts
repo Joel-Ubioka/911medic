@@ -1,3 +1,4 @@
+// patient/dashboard/dashboard.component.ts (Updated for navigation to forms)
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -12,6 +13,8 @@ export class DashboardComponent implements OnInit {
     const user = localStorage.getItem('currentUser');
     if (user) {
       this.currentUser = JSON.parse(user);
+    } else {
+      // Redirect to login if not logged in (add auth guard later)
     }
   }
 }

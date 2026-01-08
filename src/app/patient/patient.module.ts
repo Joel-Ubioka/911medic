@@ -6,12 +6,16 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 // Import login/register if they are not in auth module
 import { PatientLoginComponent } from '../auth/patient-login/patient-login.component';
 import { PatientRegisterComponent } from '../auth/patient-register/patient-register.component';
+import { ConsultationBookingComponent } from './consultation-booking/consultation-booking.component';
+import { AmbulanceRequestComponent } from './ambulance-request/ambulance-request.component';
 
 @NgModule({
   declarations: [
     DashboardComponent,
     PatientLoginComponent,
-    PatientRegisterComponent
+    PatientRegisterComponent,
+    ConsultationBookingComponent,
+    AmbulanceRequestComponent
   ],
   imports: [
     CommonModule,
