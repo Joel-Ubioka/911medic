@@ -1,9 +1,8 @@
-/* Similar to consultation-booking.css */
-.ambulance-page {
+.booking-page, .ambulance-page {
   background: #0a1f44;
 }
 
-.ambulance-bg {
+.booking-bg, .ambulance-bg {
   position: absolute;
   inset: 0;
   background: linear-gradient(135deg, #0d6efd 0%, #c0392b 50%, #0d6efd 100%);
@@ -11,7 +10,7 @@
   z-index: 1;
 }
 
-.ambulance-card {
+.booking-card, .ambulance-card {
   background: rgba(255, 255, 255, 0.08);
   backdrop-filter: blur(12px);
   border: 1px solid rgba(255, 255, 255, 0.12);
@@ -23,7 +22,7 @@
 .form-control, .form-select {
   background: rgba(255, 255, 255, 0.1);
   border: 1px solid rgba(255, 255, 255, 0.2);
-  color: #fff;
+  color: #ffffff;
 }
 
 .form-control:focus, .form-select:focus {
@@ -40,13 +39,3 @@
   color: #dc3545;
 }
 
-.animate-on-scroll {
-  opacity: 0;
-  transform: translateY(60px);
-  transition: opacity 0.9s ease-out, transform 0.9s ease-out;
-}
-
-.animate-on-scroll.visible {
-  opacity: 1;
-  transform: translateY(0);
-}

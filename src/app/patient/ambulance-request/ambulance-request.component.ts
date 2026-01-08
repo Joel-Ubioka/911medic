@@ -22,10 +22,10 @@ export class AmbulanceRequestComponent {
       fullName: ['', [Validators.required, Validators.minLength(2)]],
       phone: ['', [Validators.required, Validators.pattern('^[+]?[0-9]{10,15}$')]],
       location: ['', Validators.required],
-      type: ['', Validators.required], // Patient transport, hospital transfer, event standby
+      type: ['', Validators.required],
       description: ['', Validators.required],
       paymentMethod: ['', Validators.required],
-      receipt: [null]
+      receipt: [null] // Optional
     });
   }
 
@@ -33,15 +33,22 @@ export class AmbulanceRequestComponent {
 
   onSubmit() {
     this.submitted = true;
-    if (this.ambulanceForm.invalid) return;
+
+    // Mark all fields as touched to show validation
+    this.ambulanceForm.markAllAsTouched();
+
+    if (this.ambulanceForm.invalid) {
+      return;
+    }
 
     this.isLoading = true;
 
-    // Simulate submission
+    // Simulate successful submission
     setTimeout(() => {
-      this.successMessage = 'Ambulance request successful! Details sent to your phone.';
+      this.successMessage = 'Ambulance request successful! Our team will contact you shortly.';
       this.isLoading = false;
 
+      // Redirect to dashboard after 3 seconds
       setTimeout(() => {
         this.router.navigate(['/patient']);
       }, 3000);

@@ -5,68 +5,53 @@
 
   <div class="container position-relative z-3 py-5">
     <div class="row justify-content-center">
-      <div class="col-lg-8">
-        <div class="booking-card animate-on-scroll">
+      <div class="col-lg-10">
+        <div class="booking-card">
           <h2 class="fw-bold text-center mb-4 text-white">Book Consultation</h2>
 
-          <!-- Success Message -->
-          <div *ngIf="successMessage" class="alert alert-success mb-4">
-            {{ successMessage }}
-          </div>
-
           <form [formGroup]="bookingForm" (ngSubmit)="onSubmit()">
-            <!-- A. PATIENT INFORMATION -->
-            <h5 class="mt-5 mb-3">Patient Information</h5>
             <div class="row g-3">
-              <div class="col-md-12">
+              <!-- Patient Information -->
+              <h5 class="mt-5 mb-3">A. Patient Information</h5>
+              <div class="col-md-6">
                 <input type="text" class="form-control" placeholder="Full Name *" formControlName="fullName"
                   [class.is-invalid]="submitted && f['fullName'].errors" />
-                <div *ngIf="submitted && f['fullName'].errors" class="invalid-feedback">
-                  Required.
-                </div>
+                <div *ngIf="submitted && f['fullName'].errors" class="invalid-feedback">Required</div>
               </div>
               <div class="col-md-6">
                 <input type="tel" class="form-control" placeholder="Phone / WhatsApp *" formControlName="phone"
                   [class.is-invalid]="submitted && f['phone'].errors" />
-                <div *ngIf="submitted && f['phone'].errors" class="invalid-feedback">
-                  Required.
-                </div>
+                <div *ngIf="submitted && f['phone'].errors" class="invalid-feedback">Required</div>
               </div>
               <div class="col-md-6">
                 <input type="email" class="form-control" placeholder="Email Address *" formControlName="email"
                   [class.is-invalid]="submitted && f['email'].errors" />
-                <div *ngIf="submitted && f['email'].errors" class="invalid-feedback">
-                  Required.
-                </div>
+                <div *ngIf="submitted && f['email'].errors" class="invalid-feedback">Valid email required</div>
               </div>
               <div class="col-md-6">
                 <input type="number" class="form-control" placeholder="Age *" formControlName="age"
                   [class.is-invalid]="submitted && f['age'].errors" />
-                <div *ngIf="submitted && f['age'].errors" class="invalid-feedback">
-                  Required.
-                </div>
+                <div *ngIf="submitted && f['age'].errors" class="invalid-feedback">Required</div>
+              </div>
+              <div class="col-md-6">
+                <input type="text" class="form-control" placeholder="Location / City *" formControlName="location"
+                  [class.is-invalid]="submitted && f['location'].errors" />
+                <div *ngIf="submitted && f['location'].errors" class="invalid-feedback">Required</div>
               </div>
               <div class="col-md-6">
                 <select class="form-control" formControlName="gender"
-                  [class.is-invalid]="submitted && f['gender'].errors">
-                  <option value="">Gender *</option>
+                  [class.is-invalid]="submitted && f['gender'].errors" style="background-color: rgb(90, 90, 174);">
+                  <option value="" disabled selected>Gender *</option>
                   <option value="Male">Male</option>
                   <option value="Female">Female</option>
                   <option value="Other">Other</option>
                 </select>
-                <div *ngIf="submitted && f['gender'].errors" class="invalid-feedback">
-                  Required.
-                </div>
+                <div *ngIf="submitted && f['gender'].errors" class="invalid-feedback">Required</div>
               </div>
+
+              <!-- For Whom -->
               <div class="col-12">
-                <input type="text" class="form-control" placeholder="Location / City *" formControlName="location"
-                  [class.is-invalid]="submitted && f['location'].errors" />
-                <div *ngIf="submitted && f['location'].errors" class="invalid-feedback">
-                  Required.
-                </div>
-              </div>
-              <div class="col-12">
-                <label class="form-label">Is this for you or someone else?</label>
+                <label class="form-label">Is this consultation for you or someone else?</label>
                 <div class="d-flex gap-4">
                   <div class="form-check">
                     <input class="form-check-input" type="radio" formControlName="forWhom" value="self" id="self">
@@ -77,45 +62,30 @@
                     <label class="form-check-label" for="other">Another person</label>
                   </div>
                 </div>
-                <div *ngIf="submitted && f['forWhom'].errors" class="invalid-feedback">
-                  Required.
-                </div>
                 <div *ngIf="f['forWhom'].value === 'other'" class="mt-3">
-                  <input type="text" class="form-control" placeholder="Specify name & age" formControlName="otherPerson"
-                    [class.is-invalid]="submitted && f['otherPerson'].errors" />
-                  <div *ngIf="submitted && f['otherPerson'].errors" class="invalid-feedback">
-                    Required for 'Another person'.
-                  </div>
+                  <input type="text" class="form-control" placeholder="Specify name & age" formControlName="otherPerson" />
                 </div>
               </div>
-            </div>
 
-            <!-- B. CONSULTATION TYPE -->
-            <h5 class="mt-5 mb-3">Consultation Type</h5>
-            <div class="row g-3">
+              <!-- Consultation Type -->
+              <h5 class="mt-5 mb-3">B. Consultation Type</h5>
               <div class="col-12">
-                <div class="form-check">
-                  <input class="form-check-input" type="radio" formControlName="consultationType" value="online" id="online">
-                  <label class="form-check-label" for="online">Online Consultation</label>
-                </div>
-                <div class="form-check">
-                  <input class="form-check-input" type="radio" formControlName="consultationType" value="physical" id="physical">
-                  <label class="form-check-label" for="physical">Physical Consultation</label>
-                </div>
-                <div *ngIf="submitted && f['consultationType'].errors" class="invalid-feedback">
-                  Required.
-                </div>
+                <select class="form-control" formControlName="consultationType"
+                  [class.is-invalid]="submitted && f['consultationType'].errors" style="background-color: rgb(90, 90, 174);">
+                  <option value="">Select Consultation Type *</option>
+                  <option value="online">Online Consultation</option>
+                  <option value="physical">Physical Consultation</option>
+                </select>
+                <div *ngIf="submitted && f['consultationType'].errors" class="invalid-feedback">Required</div>
               </div>
-            </div>
 
-            <!-- C. SPECIALIST SELECTION -->
-            <h5 class="mt-5 mb-3">Select Specialist</h5>
-            <div class="row g-3">
+              <!-- Specialist Selection -->
+              <h5 class="mt-5 mb-3">C. Specialist Selection & Pricing</h5>
               <div class="col-12">
                 <select class="form-control" formControlName="specialist"
-                  [class.is-invalid]="submitted && f['specialist'].errors">
+                  [class.is-invalid]="submitted && f['specialist'].errors" style="background-color: rgb(90, 90, 174);">
                   <option value="">Select Specialist *</option>
-                  <optgroup label="Online Consultation (₦10,000 – ₦15,000)">
+                  <optgroup label="Online Consultation">
                     <option value="cardiologist-online">Cardiologist — ₦15,000</option>
                     <option value="dermatologist-online">Dermatologist — ₦15,000</option>
                     <option value="mental-health-online">Mental Health Specialist — ₦15,000</option>
@@ -132,69 +102,55 @@
                     <option value="gynecologist-physical">Gynecologist</option>
                   </optgroup>
                 </select>
-                <div *ngIf="submitted && f['specialist'].errors" class="invalid-feedback">
-                  Required.
-                </div>
+                <div *ngIf="submitted && f['specialist'].errors" class="invalid-feedback">Required</div>
               </div>
-            </div>
 
-            <!-- D. TIMEFRAME -->
-            <h5 class="mt-5 mb-3">Preferred Timeframe</h5>
-            <div class="row g-3">
+              <!-- Timeframe -->
+              <h5 class="mt-5 mb-3">D. Preferred Timeframe</h5>
+              <div class="col-12">
+                <select class="form-control" formControlName="timeframe"
+                  [class.is-invalid]="submitted && f['timeframe'].errors" style="background-color: rgb(90, 90, 174);">
+                  <option value="">Select Timeframe *</option>
+                  <option value="immediate">Immediate</option>
+                  <option value="24-hours">Within 24 Hours</option>
+                  <option value="48-hours">Within 48 Hours</option>
+                </select>
+                <div *ngIf="submitted && f['timeframe'].errors" class="invalid-feedback">Required</div>
+              </div>
+
+              <!-- Payment Method -->
+              <h5 class="mt-5 mb-3">E. Payment Method</h5>
               <div class="col-12">
                 <div class="form-check">
-                  <input class="form-check-input" type="radio" formControlName="timeframe" value="immediate" id="immediate">
-                  <label class="form-check-label" for="immediate">Immediate</label>
-                </div>
-                <div class="form-check">
-                  <input class="form-check-input" type="radio" formControlName="timeframe" value="24-hours" id="24hours">
-                  <label class="form-check-label" for="24hours">Within 24 Hours</label>
-                </div>
-                <div class="form-check">
-                  <input class="form-check-input" type="radio" formControlName="timeframe" value="48-hours" id="48hours">
-                  <label class="form-check-label" for="48hours">Within 48 Hours</label>
-                </div>
-                <div *ngIf="submitted && f['timeframe'].errors" class="invalid-feedback">
-                  Required.
-                </div>
-              </div>
-            </div>
-
-            <!-- E. PAYMENT -->
-            <h5 class="mt-5 mb-3">Payment Method</h5>
-            <div class="row g-3">
-              <div class="col-12">
-                <div class="form-check">
-                  <input class="form-check-input" type="radio" formControlName="paymentMethod" value="bank-transfer" id="bank-transfer" (change)="onPaymentChange('bank-transfer')">
-                  <label class="form-check-label" for="bank-transfer">Bank Transfer</label>
+                  <input class="form-check-input" type="radio" formControlName="paymentMethod" value="bank-transfer" id="bank" (change)="onPaymentChange('bank-transfer')">
+                  <label class="form-check-label" for="bank">Bank Transfer</label>
                 </div>
                 <div class="form-check">
                   <input class="form-check-input" type="radio" formControlName="paymentMethod" value="paystack" id="paystack" (change)="onPaymentChange('paystack')">
                   <label class="form-check-label" for="paystack">Paystack / Flutterwave</label>
                 </div>
-                <div *ngIf="submitted && f['paymentMethod'].errors" class="invalid-feedback">
-                  Required.
-                </div>
+                <div *ngIf="submitted && f['paymentMethod'].errors" class="invalid-feedback">Required</div>
+
                 <div *ngIf="paymentMethod === 'bank-transfer'" class="mt-3 p-3 border rounded bg-dark">
                   <h6>Bank Details</h6>
                   <p>Bank: GTBank<br>Account Name: 911Medic Ltd<br>Account Number: 0123456789</p>
-                  <input type="file" class="form-control mt-3" (change)="onReceiptUpload($event)" accept="image/*, .pdf" />
-                  <small class="text-white-75">Upload payment receipt</small>
+                  <input type="file" class="form-control" (change)="onReceiptUpload($event)" accept="image/*,.pdf" />
+                  <small class="text-white-75">Upload payment receipt (optional)</small>
                 </div>
               </div>
-            </div>
 
-            <!-- F. CONFIRMATION NOTICE -->
-            <div class="mt-4 p-3 border rounded bg-dark text-white-75">
-              For physical consultations, venue and specialist details will be shared within 24–48 hours for your approval before final booking.
-            </div>
+              <!-- Confirmation Notice -->
+              <div class="mt-4 p-3 border rounded bg-dark text-white-75">
+                For physical consultations, venue and specialist details will be shared within 24–48 hours for your approval before final booking.
+              </div>
 
-            <!-- Submit -->
-            <div class="text-center mt-5">
-              <button type="submit" class="btn btn-primary btn-lg px-5 py-3" [disabled]="bookingForm.invalid || isLoading">
-                <span *ngIf="isLoading" class="spinner-border spinner-border-sm me-2"></span>
-                {{ isLoading ? 'Processing...' : 'Submit Booking' }}
-              </button>
+              <!-- Submit -->
+              <div class="text-center mt-5">
+                <button type="submit" class="btn btn-primary btn-lg px-5 py-3" [disabled]="bookingForm.invalid || isLoading">
+                  <span *ngIf="isLoading" class="spinner-border spinner-border-sm me-2"></span>
+                  {{ isLoading ? 'Processing...' : 'Submit Booking' }}
+                </button>
+              </div>
             </div>
           </form>
         </div>
