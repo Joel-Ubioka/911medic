@@ -10,6 +10,7 @@ const routes: Routes = [
     path: 'patient',
     loadChildren: () => import('./patient/patient.module').then(m => m.PatientModule)
   },
+  { path: 'specialist', loadChildren: () => import('./specialist/specialist.module').then(m => m.SpecialistModule) },
   { path: '**', redirectTo: '' }
 ];
 
