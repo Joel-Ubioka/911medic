@@ -20,11 +20,9 @@ export class SpecialistRegisterComponent {
   ) {
     this.registerForm = this.fb.group({
       fullName: ['', [Validators.required, Validators.minLength(3)]],
-      email: ['', [Validators.required, Validators.email]],
-      phone: ['', [Validators.required, Validators.pattern('^[+]?[0-9]{10,15}$')]],
       address: ['', [Validators.required, Validators.minLength(5)]],
-      cv: [null, Validators.required],          // CV upload
-      idDocument: [null, Validators.required]   // ID (Driving License or NIN)
+      cv: [null, Validators.required],
+      idDocument: [null, Validators.required]
     });
   }
 
@@ -32,38 +30,36 @@ export class SpecialistRegisterComponent {
 
   onSubmit() {
     this.submitted = true;
-
-    if (this.registerForm.invalid) {
-      return;
-    }
+    if (this.registerForm.invalid) return;
 
     this.isLoading = true;
     this.errorMessage = '';
 
+    // Simulate backend signup
     const formData = this.registerForm.value;
 
-    // Check for duplicate email
+    // Duplicate check (email, but since no email, use name as key for demo)
     const existingSpecialists = JSON.parse(localStorage.getItem('specialists') || '[]');
-    if (existingSpecialists.some((s: any) => s.email === formData.email)) {
-      this.errorMessage = 'This email is already registered. Please login.';
+    if (existingSpecialists.some((s: any) => s.fullName === formData.fullName)) {
+      this.errorMessage = 'This name is already registered. Please login.';
       this.isLoading = false;
       return;
     }
 
-    // Simulate saving (add files as metadata for demo)
+    // Save with 'pending' status
     const specialist = {
       ...formData,
-      status: 'pending', // Waiting for approval
+      status: 'pending',
       registeredAt: new Date().toISOString()
     };
 
     existingSpecialists.push(specialist);
     localStorage.setItem('specialists', JSON.stringify(existingSpecialists));
 
-    this.successMessage = 'Registration successful! Your account is pending approval. You will be notified once verified.';
+    this.successMessage = 'Registration successful! Your account is pending approval. You will be notified once approved.';
     this.isLoading = false;
 
-    // Redirect to specialist login after 4 seconds
+    // Redirect to login after 4 seconds
     setTimeout(() => {
       this.router.navigate(['/specialist/login']);
     }, 4000);

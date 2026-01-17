@@ -7,13 +7,13 @@
     <div class="row justify-content-center">
       <div class="col-lg-8 col-xl-6">
         <div class="register-card animate-on-scroll">
-          <h2 class="fw-bold text-center mb-4 text-white">Specialist Registration</h2>
+          <h2 class="fw-bold text-center mb-4 text-white">Specialist Sign Up</h2>
           <p class="text-center text-white-75 mb-5">
-            Join 911Medic as a verified specialist. Upload your CV and valid ID (Driving License or NIN) for approval.
+            Register as a specialist. Upload your CV and ID for approval.
           </p>
 
-          <!-- Messages -->
-          <div *ngIf="successMessage" class="alert alert-success text-center mb-4 p-4 rounded shadow-lg">
+          <!-- Success/Error Messages -->
+          <div *ngIf="successMessage" class="alert alert-success text-center mb-4">
             {{ successMessage }}
           </div>
 
@@ -32,31 +32,15 @@
               </div>
 
               <div class="col-md-6">
-                <input type="email" class="form-control" placeholder="Email Address *" formControlName="email"
-                  [class.is-invalid]="submitted && f['email'].errors" />
-                <div *ngIf="submitted && f['email'].errors" class="invalid-feedback">
-                  Valid email is required.
-                </div>
-              </div>
-
-              <div class="col-md-6">
-                <input type="tel" class="form-control" placeholder="Phone Number *" formControlName="phone"
-                  [class.is-invalid]="submitted && f['phone'].errors" />
-                <div *ngIf="submitted && f['phone'].errors" class="invalid-feedback">
-                  Valid phone number required.
-                </div>
-              </div>
-
-              <div class="col-md-6">
                 <input type="text" class="form-control" placeholder="Address *" formControlName="address"
                   [class.is-invalid]="submitted && f['address'].errors" />
                 <div *ngIf="submitted && f['address'].errors" class="invalid-feedback">
-                  Address is required.
+                  Address is required (min 5 characters).
                 </div>
               </div>
 
               <div class="col-md-6">
-                <label class="form-label text-white">Upload CV * (PDF/DOC)</label>
+                <label class="form-label text-white">Upload CV (PDF/DOC) *</label>
                 <input type="file" class="form-control" (change)="onCVUpload($event)" accept=".pdf,.doc,.docx" />
                 <div *ngIf="submitted && f['cv'].errors" class="invalid-feedback">
                   CV upload is required.
@@ -64,27 +48,22 @@
               </div>
 
               <div class="col-md-6">
-                <label class="form-label text-white">Upload ID (Driving License or NIN) * (Image/PDF)</label>
+                <label class="form-label text-white">Upload ID (Driving License or NIN, Image/PDF) *</label>
                 <input type="file" class="form-control" (change)="onIDUpload($event)" accept="image/*,.pdf" />
-                <div *ngIf="submitted && f['idUpload'].errors" class="invalid-feedback">
-                  ID document upload is required.
+                <div *ngIf="submitted && f['idDocument'].errors" class="invalid-feedback">
+                  ID upload is required.
                 </div>
               </div>
 
-              <!-- Submit -->
-              <div class="col-12 text-center mt-5">
+              <div class="text-center mt-5">
                 <button type="submit" class="btn btn-primary btn-lg px-5 py-3"
                   [disabled]="registerForm.invalid || isLoading">
                   <span *ngIf="isLoading" class="spinner-border spinner-border-sm me-2"></span>
-                  {{ isLoading ? 'Submitting...' : 'Complete Registration' }}
+                  {{ isLoading ? 'Processing...' : 'Register' }}
                 </button>
               </div>
             </div>
           </form>
-
-          <p class="text-center mt-4 text-white-75">
-            Already registered? <a routerLink="/specialist/login" class="text-primary">Login here</a>
-          </p>
         </div>
       </div>
     </div>
