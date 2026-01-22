@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { SpecialistRegisterComponent } from '../auth/specialist-register/specialist-register.component';
+import { SpecialistRegisterComponent } from '../auth/specialist-register/specialist-register.component'; // ← Already correct
 
 const routes: Routes = [
-  { path: '', component: DashboardComponent }, // /specialist → dashboard
-  { path: 'register', component: SpecialistRegisterComponent }, 
+  { path: '', component: DashboardComponent },
+  { path: 'register', component: SpecialistRegisterComponent }, // ← Already correct
   { path: '**', redirectTo: '' }
 ];
 
