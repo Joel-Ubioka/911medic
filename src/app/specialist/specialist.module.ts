@@ -5,10 +5,12 @@ import { SharedModule } from '../shared/shared.module';
 
 import { SpecialistRoutingModule } from './specialist-routing.module';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { SpecialistRegisterComponent } from '../auth/specialist-register/specialist-register.component';
 
 @NgModule({
   declarations: [
-    DashboardComponent
+    DashboardComponent,
+    SpecialistRegisterComponent
     // add more later: bookings, etc.
   ],
   imports: [

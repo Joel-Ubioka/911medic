@@ -12,7 +12,7 @@ const routes: Routes = [
   },
   { path: 'specialist',
      loadChildren: () => import('./specialist/specialist.module').then(m => m.SpecialistModule) },
-  { path: '**', redirectTo: '' }
+  
 ];
 
 @NgModule({
