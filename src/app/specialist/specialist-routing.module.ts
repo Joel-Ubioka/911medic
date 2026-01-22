@@ -1,12 +1,16 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { SpecialistRegisterComponent } from '../auth/specialist-register/specialist-register.component';
 
 const routes: Routes = [
-  { path: '', component: DashboardComponent }, // /specialist → dashboard
-  { path: 'register', component: SpecialistRegisterComponent }, 
-  { path: '**', redirectTo: '' }
+  {
+    path: '',
+    component: DashboardComponent   // /specialist → dashboard
+  },
+  {
+    path: '**',
+    redirectTo: ''
+  }
 ];
 
 @NgModule({
