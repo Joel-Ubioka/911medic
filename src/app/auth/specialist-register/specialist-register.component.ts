@@ -35,31 +35,30 @@ export class SpecialistRegisterComponent {
     this.isLoading = true;
     this.errorMessage = '';
 
-    // Simulate backend signup
     const formData = this.registerForm.value;
 
-    // Duplicate check (email, but since no email, use name as key for demo)
-    const existingSpecialists = JSON.parse(localStorage.getItem('specialists') || '[]');
-    if (existingSpecialists.some((s: any) => s.fullName === formData.fullName)) {
-      this.errorMessage = 'This name is already registered. Please login.';
+    // Duplicate check (by name for simplicity)
+    const existing = JSON.parse(localStorage.getItem('specialists') || '[]');
+    if (existing.some((s: any) => s.fullName.toLowerCase() === formData.fullName.toLowerCase())) {
+      this.errorMessage = 'This name is already registered. Please login or use a different name.';
       this.isLoading = false;
       return;
     }
 
-    // Save with 'pending' status
+    // Save with pending status
     const specialist = {
       ...formData,
       status: 'pending',
       registeredAt: new Date().toISOString()
     };
 
-    existingSpecialists.push(specialist);
-    localStorage.setItem('specialists', JSON.stringify(existingSpecialists));
+    existing.push(specialist);
+    localStorage.setItem('specialists', JSON.stringify(existing));
 
-    this.successMessage = 'Registration successful! Your account is pending approval. You will be notified once approved.';
+    this.successMessage = 'Registration submitted successfully! Your profile is pending approval. We will notify you once verified.';
     this.isLoading = false;
 
-    // Redirect to login after 4 seconds
+    // Redirect to login after short delay
     setTimeout(() => {
       this.router.navigate(['/specialist/login']);
     }, 4000);
@@ -69,7 +68,6 @@ export class SpecialistRegisterComponent {
     const file = event.target.files[0];
     if (file) {
       this.registerForm.patchValue({ cv: file });
-      this.registerForm.get('cv')?.updateValueAndValidity();
     }
   }
 
@@ -77,7 +75,6 @@ export class SpecialistRegisterComponent {
     const file = event.target.files[0];
     if (file) {
       this.registerForm.patchValue({ idDocument: file });
-      this.registerForm.get('idDocument')?.updateValueAndValidity();
     }
   }
 }
