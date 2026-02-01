@@ -4,6 +4,7 @@ import { SharedModule } from '../shared/shared.module';
 
 import { SpecialistRoutingModule } from './specialist-routing.module';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -12,6 +13,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
   ],
   imports: [
     CommonModule,
+    ReactiveFormsModule,
     SharedModule,
     SpecialistRoutingModule
   ]
