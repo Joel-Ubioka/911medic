@@ -1,0 +1,246 @@
+<app-navbar></app-navbar>
+
+<div
+  class="specialist-dashboard min-vh-100 position-relative overflow-hidden text-light"
+>
+  <div class="dashboard-bg"></div>
+
+  <div class="container position-relative z-3 py-5">
+    <!-- Header -->
+    <div class="text-center mb-5">
+      <h1 class="display-4 fw-bold mb-4 text-white">
+        Welcome, Dr. {{ currentSpecialist?.fullName || "Specialist" }}!
+      </h1>
+      <p class="lead text-white-75 mb-4">
+        Manage your consultations, availability, and patient interactions.
+      </p>
+
+      <!-- Availability Status -->
+      <div class="mb-3">
+        <button
+          (click)="toggleAvailability()"
+          class="btn btn-lg px-5 py-3"
+          [ngClass]="isOnline ? 'btn-success' : 'btn-secondary'"
+        >
+          <i
+            class="bi"
+            [ngClass]="isOnline ? 'bi-circle-fill' : 'bi-circle'"
+          ></i>
+          {{ isOnline ? "Online" : "Offline" }}
+        </button>
+      </div>
+    </div>
+
+    <!-- Main Content Grid -->
+    <div class="row g-4">
+      <!-- Left: Pending Requests -->
+      <div class="col-lg-6">
+        <div class="dashboard-card-large">
+          <h3 class="mb-4 text-white">
+            <i class="bi bi-inbox"></i> Pending Consultation Requests
+          </h3>
+
+          <div
+            *ngIf="consultationRequests.length === 0"
+            class="text-center text-white-50 py-5"
+          >
+            <p>No pending requests at this time.</p>
+          </div>
+
+          <div
+            *ngFor="let request of consultationRequests"
+            class="consultation-request-card mb-3"
+          >
+            <div class="d-flex justify-content-between align-items-start">
+              <div>
+                <h5 class="text-white">{{ request.fullName }}</h5>
+                <p class="text-white-75 mb-2">
+                  <i class="bi bi-telephone-fill"></i> {{ request.phone }}
+                </p>
+                <p class="text-white-75 mb-2">
+                  <i class="bi bi-envelope-fill"></i> {{ request.email }}
+                </p>
+                <p class="text-white-75">
+                  <i class="bi bi-calendar-event"></i> Requested:
+                  {{ request.consultationType || "Online" }}
+                </p>
+              </div>
+              <button
+                (click)="selectRequest(request)"
+                class="btn btn-primary btn-sm"
+              >
+                Review
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Request Details & Actions -->
+      <div class="col-lg-6">
+        <div class="dashboard-card-large">
+          <h3 class="mb-4 text-white">
+            <i class="bi bi-check-circle"></i> Accept/Reject Request
+          </h3>
+
+          <div *ngIf="!selectedRequest" class="text-center text-white-50 py-5">
+            <p>
+              Select a consultation request to review details and set an
+              appointment time.
+            </p>
+          </div>
+
+          <div *ngIf="selectedRequest" class="selected-request">
+            <!-- Patient Details -->
+            <div class="patient-info mb-4 p-3 border rounded bg-dark">
+              <h5 class="text-white mb-3">Patient Information</h5>
+              <p class="mb-2">
+                <strong>Name:</strong> {{ selectedRequest.fullName }}
+              </p>
+              <p class="mb-2">
+                <strong>Email:</strong> {{ selectedRequest.email }}
+              </p>
+              <p class="mb-2">
+                <strong>Phone:</strong> {{ selectedRequest.phone }}
+              </p>
+              <p class="mb-2">
+                <strong>Age:</strong> {{ selectedRequest.age }}
+              </p>
+              <p class="mb-2">
+                <strong>Location:</strong> {{ selectedRequest.location }}
+              </p>
+              <p class="mb-2">
+                <strong>Gender:</strong> {{ selectedRequest.gender }}
+              </p>
+              <p>
+                <strong>Description:</strong>
+                {{ selectedRequest.description || "N/A" }}
+              </p>
+            </div>
+
+            <!-- Appointment Time Input -->
+            <div class="mb-3">
+              <label class="form-label text-white"
+                >Set Appointment Time *</label
+              >
+              <input
+                type="datetime-local"
+                class="form-control"
+                [(ngModel)]="appointmentTime"
+                placeholder="Select appointment date and time"
+              />
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="d-flex gap-2">
+              <button
+                (click)="acceptRequest()"
+                class="btn btn-success flex-grow-1"
+                [disabled]="!appointmentTime"
+              >
+                <i class="bi bi-check-lg"></i> Accept & Set Time
+              </button>
+              <button
+                (click)="rejectRequest()"
+                class="btn btn-danger flex-grow-1"
+              >
+                <i class="bi bi-x-lg"></i> Reject
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Consultation History -->
+    <div class="row g-4 mt-4">
+      <div class="col-12">
+        <div class="dashboard-card-large">
+          <h3 class="mb-4 text-white">
+            <i class="bi bi-clock-history"></i> Consultation History
+          </h3>
+
+          <div
+            *ngIf="acceptedConsultations.length === 0"
+            class="text-center text-white-50 py-5"
+          >
+            <p>No consultation history yet.</p>
+          </div>
+
+          <div
+            class="table-responsive"
+            *ngIf="acceptedConsultations.length > 0"
+          >
+            <table class="table table-dark table-hover">
+              <thead>
+                <tr class="table-primary">
+                  <th>Patient</th>
+                  <th>Type</th>
+                  <th>Appointment Time</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let consultation of acceptedConsultations">
+                  <td>{{ consultation.fullName }}</td>
+                  <td>{{ consultation.consultationType }}</td>
+                  <td>{{ consultation.appointmentTime }}</td>
+                  <td>
+                    <span class="badge bg-success">Accepted</span>
+                  </td>
+                  <td>
+                    <button
+                      (click)="viewPatientDetails(consultation)"
+                      class="btn btn-sm btn-outline-primary"
+                    >
+                      View Details
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="row g-4 mt-4">
+      <div class="col-md-6 col-lg-4">
+        <div class="dashboard-card">
+          <div class="card-icon"><i class="bi bi-person-gear"></i></div>
+          <h3>Manage Profile</h3>
+          <p>Update your professional information and specialization.</p>
+          <button class="btn btn-outline-light mt-3" disabled>
+            Coming Soon
+          </button>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-lg-4">
+        <div class="dashboard-card">
+          <div class="card-icon"><i class="bi bi-graph-up"></i></div>
+          <h3>View Statistics</h3>
+          <p>Track your consultation statistics and ratings.</p>
+          <button class="btn btn-outline-light mt-3" disabled>
+            Coming Soon
+          </button>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-lg-4">
+        <div class="dashboard-card">
+          <div class="card-icon"><i class="bi bi-chat-dots-fill"></i></div>
+          <h3>Messages</h3>
+          <p>Communicate with patients regarding consultations.</p>
+          <button class="btn btn-outline-light mt-3" disabled>
+            Coming Soon
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-footer></app-footer>

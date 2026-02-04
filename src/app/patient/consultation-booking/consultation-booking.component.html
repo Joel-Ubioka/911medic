@@ -1,0 +1,426 @@
+<app-navbar></app-navbar>
+
+<div
+  class="booking-page min-vh-100 position-relative overflow-hidden text-light"
+>
+  <div class="booking-bg"></div>
+
+  <div class="container position-relative z-3 py-5">
+    <div class="row justify-content-center">
+      <div class="col-lg-10">
+        <div class="booking-card">
+          <h2 class="fw-bold text-center mb-4 text-white">Book Consultation</h2>
+
+          <form [formGroup]="bookingForm" (ngSubmit)="onSubmit()">
+            <div class="row g-3">
+              <!-- Patient Information -->
+              <h5 class="mt-5 mb-3">A. Patient Information</h5>
+              <div class="col-md-6">
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Full Name *"
+                  formControlName="fullName"
+                  [class.is-invalid]="submitted && f['fullName'].errors"
+                />
+                <div
+                  *ngIf="submitted && f['fullName'].errors"
+                  class="invalid-feedback"
+                >
+                  Required
+                </div>
+              </div>
+              <div class="col-md-6">
+                <input
+                  type="tel"
+                  class="form-control"
+                  placeholder="Phone / WhatsApp *"
+                  formControlName="phone"
+                  [class.is-invalid]="submitted && f['phone'].errors"
+                />
+                <div
+                  *ngIf="submitted && f['phone'].errors"
+                  class="invalid-feedback"
+                >
+                  Required
+                </div>
+              </div>
+              <div class="col-md-6">
+                <input
+                  type="email"
+                  class="form-control"
+                  placeholder="Email Address *"
+                  formControlName="email"
+                  [class.is-invalid]="submitted && f['email'].errors"
+                />
+                <div
+                  *ngIf="submitted && f['email'].errors"
+                  class="invalid-feedback"
+                >
+                  Valid email required
+                </div>
+              </div>
+              <div class="col-md-6">
+                <input
+                  type="number"
+                  class="form-control"
+                  placeholder="Age *"
+                  formControlName="age"
+                  [class.is-invalid]="submitted && f['age'].errors"
+                />
+                <div
+                  *ngIf="submitted && f['age'].errors"
+                  class="invalid-feedback"
+                >
+                  Required
+                </div>
+              </div>
+              <div class="col-md-6">
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Location / City *"
+                  formControlName="location"
+                  [class.is-invalid]="submitted && f['location'].errors"
+                />
+                <div
+                  *ngIf="submitted && f['location'].errors"
+                  class="invalid-feedback"
+                >
+                  Required
+                </div>
+              </div>
+              <div class="col-md-6">
+                <select
+                  class="form-control"
+                  formControlName="gender"
+                  [class.is-invalid]="submitted && f['gender'].errors"
+                  style="background-color: rgb(90, 90, 174)"
+                >
+                  <option value="" disabled selected>Gender *</option>
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                  <option value="Other">Other</option>
+                </select>
+                <div
+                  *ngIf="submitted && f['gender'].errors"
+                  class="invalid-feedback"
+                >
+                  Required
+                </div>
+              </div>
+
+              <!-- For Whom -->
+              <div class="col-12">
+                <label class="form-label"
+                  >Is this consultation for you or someone else?</label
+                >
+                <div class="d-flex gap-4">
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="radio"
+                      formControlName="forWhom"
+                      value="self"
+                      id="self"
+                    />
+                    <label class="form-check-label" for="self">Self</label>
+                  </div>
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="radio"
+                      formControlName="forWhom"
+                      value="other"
+                      id="other"
+                    />
+                    <label class="form-check-label" for="other"
+                      >Another person</label
+                    >
+                  </div>
+                </div>
+                <div *ngIf="f['forWhom'].value === 'other'" class="mt-3">
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Specify name & age"
+                    formControlName="otherPerson"
+                  />
+                </div>
+              </div>
+
+              <!-- Consultation Type -->
+              <h5 class="mt-5 mb-3">B. Consultation Type</h5>
+              <div class="col-12">
+                <select
+                  class="form-control"
+                  formControlName="consultationType"
+                  [class.is-invalid]="submitted && f['consultationType'].errors"
+                  style="background-color: rgb(90, 90, 174)"
+                >
+                  <option value="">Select Consultation Type *</option>
+                  <option value="online">Online Consultation</option>
+                  <option value="physical">Physical Consultation</option>
+                </select>
+                <div
+                  *ngIf="submitted && f['consultationType'].errors"
+                  class="invalid-feedback"
+                >
+                  Required
+                </div>
+              </div>
+
+              <!-- Specialist Selection -->
+              <h5 class="mt-5 mb-3">C. Specialist Selection & Pricing</h5>
+              <div class="col-12">
+                <select
+                  class="form-control"
+                  formControlName="specialist"
+                  [class.is-invalid]="submitted && f['specialist'].errors"
+                  style="background-color: rgb(90, 90, 174)"
+                >
+                  <option value="">Select Specialist *</option>
+                  <optgroup label="Online Consultation">
+                    <option value="cardiologist-online">
+                      Cardiologist — ₦15,000
+                    </option>
+                    <option value="dermatologist-online">
+                      Dermatologist — ₦15,000
+                    </option>
+                    <option value="mental-health-online">
+                      Mental Health Specialist — ₦15,000
+                    </option>
+                    <option value="pediatrician-online">
+                      Pediatrician — ₦15,000
+                    </option>
+                    <option value="gynecologist-online">
+                      Gynecologist — ₦15,000
+                    </option>
+                    <option value="dietician-online">
+                      Dietician / Weight-Loss Expert — ₦10,000
+                    </option>
+                  </optgroup>
+                  <optgroup label="Physical Consultation (₦30,000)">
+                    <option value="cardiologist-physical">Cardiologist</option>
+                    <option value="neuro-surgeon-physical">
+                      Neuro-Surgeon
+                    </option>
+                    <option value="urologist-physical">Urologist</option>
+                    <option value="oncologist-physical">Oncologist</option>
+                    <option value="pediatrician-physical">Pediatrician</option>
+                    <option value="gynecologist-physical">Gynecologist</option>
+                  </optgroup>
+                </select>
+                <div
+                  *ngIf="submitted && f['specialist'].errors"
+                  class="invalid-feedback"
+                >
+                  Required
+                </div>
+              </div>
+
+              <!-- Timeframe -->
+              <h5 class="mt-5 mb-3">D. Preferred Timeframe</h5>
+              <div class="col-12">
+                <select
+                  class="form-control"
+                  formControlName="timeframe"
+                  [class.is-invalid]="submitted && f['timeframe'].errors"
+                  style="background-color: rgb(90, 90, 174)"
+                >
+                  <option value="">Select Timeframe *</option>
+                  <option value="immediate">Immediate</option>
+                  <option value="24-hours">Within 24 Hours</option>
+                  <option value="48-hours">Within 48 Hours</option>
+                </select>
+                <div
+                  *ngIf="submitted && f['timeframe'].errors"
+                  class="invalid-feedback"
+                >
+                  Required
+                </div>
+              </div>
+
+              <!-- Payment Method -->
+              <h5 class="mt-5 mb-3">E. Payment Method</h5>
+              <div class="col-12">
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    formControlName="paymentMethod"
+                    value="bank-transfer"
+                    id="bank"
+                    (change)="onPaymentChange('bank-transfer')"
+                  />
+                  <label class="form-check-label" for="bank"
+                    >Bank Transfer</label
+                  >
+                </div>
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    formControlName="paymentMethod"
+                    value="paystack"
+                    id="paystack"
+                    (change)="onPaymentChange('paystack'); openPaymentModal()"
+                  />
+                  <label
+                    class="form-check-label"
+                    for="paystack"
+                    style="cursor: pointer"
+                  >
+                    Paystack / Flutterwave
+                  </label>
+                </div>
+                <div
+                  *ngIf="submitted && f['paymentMethod'].errors"
+                  class="invalid-feedback"
+                >
+                  Required
+                </div>
+
+                <div
+                  *ngIf="paymentMethod === 'bank-transfer'"
+                  class="mt-3 p-3 border rounded bg-dark"
+                >
+                  <h6>Bank Details</h6>
+                  <p>
+                    Bank: GTBank<br />Account Name: 911Medic Ltd<br />Account
+                    Number: 0123456789
+                  </p>
+                  <input
+                    type="file"
+                    class="form-control"
+                    (change)="onReceiptUpload($event)"
+                    accept="image/*,.pdf"
+                  />
+                  <small class="text-white-75"
+                    >Upload payment receipt (optional)</small
+                  >
+                </div>
+              </div>
+
+              <!-- Confirmation Notice -->
+              <div class="mt-4 p-3 border rounded bg-dark text-white-75">
+                For physical consultations, venue and specialist details will be
+                shared within 24–48 hours for your approval before final
+                booking.
+              </div>
+
+              <!-- Submit -->
+              <div class="text-center mt-5">
+                <button
+                  type="submit"
+                  class="btn btn-primary btn-lg px-5 py-3"
+                  [disabled]="
+                    (bookingForm.invalid && !paymentCompleted) || isLoading
+                  "
+                >
+                  <span
+                    *ngIf="isLoading"
+                    class="spinner-border spinner-border-sm me-2"
+                  ></span>
+                  {{ isLoading ? "Processing..." : "Submit Booking" }}
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Payment Modal (Outside z-3 container for proper stacking) -->
+<div
+  class="modal fade"
+  id="paymentModal"
+  tabindex="-1"
+  aria-labelledby="paymentModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content bg-dark text-light border border-primary">
+      <div class="modal-header border-bottom border-primary">
+        <h5 class="modal-title" id="paymentModalLabel">
+          <i class="bi bi-credit-card me-2"></i> Complete Payment with Paystack
+        </h5>
+        <button
+          type="button"
+          class="btn-close btn-close-white"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <form id="paymentForm">
+          <div class="mb-3">
+            <label class="form-label">Card Number</label>
+            <input
+              type="text"
+              class="form-control"
+              placeholder="1234 5678 9012 3456"
+              maxlength="19"
+              value="4084084084084081"
+            />
+          </div>
+          <div class="row">
+            <div class="col-6 mb-3">
+              <label class="form-label">Expiry Date</label>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="MM/YY"
+                value="12/26"
+              />
+            </div>
+            <div class="col-6 mb-3">
+              <label class="form-label">CVV</label>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="123"
+                maxlength="3"
+                value="123"
+              />
+            </div>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Cardholder Name</label>
+            <input
+              type="text"
+              class="form-control"
+              placeholder="John Doe"
+              value="Test User"
+            />
+          </div>
+
+          <!-- Success State (Hidden Initially) -->
+          <div id="paymentSuccess" class="text-center d-none">
+            <i
+              class="bi bi-check-circle-fill text-success"
+              style="font-size: 4rem"
+            ></i>
+            <h4 class="mt-3 text-success">Payment Successful!</h4>
+            <p>Your payment has been processed successfully.</p>
+          </div>
+
+          <!-- Pay Button -->
+          <div id="payButtonContainer">
+            <button
+              type="button"
+              class="btn btn-primary btn-lg w-100"
+              id="payButton"
+            >
+              Pay Now
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-footer></app-footer>

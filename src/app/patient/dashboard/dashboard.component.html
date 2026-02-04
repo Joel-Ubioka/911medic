@@ -1,0 +1,60 @@
+<app-navbar></app-navbar>
+
+<div class="patient-dashboard min-vh-100 position-relative overflow-hidden text-light">
+  <div class="dashboard-bg"></div>
+
+  <div class="container position-relative z-3 py-5">
+    <div class="text-center">
+      <h1 class="display-4 fw-bold mb-4 text-white">
+        Welcome, {{ currentUser?.fullName || 'Patient' }}!
+      </h1>
+      <p class="lead text-white-75 mb-5">
+        Manage your consultations, bookings, and more.
+      </p>
+    </div>
+
+    <div class="row g-4 justify-content-center">
+      <!-- Book Consultation -->
+      <div class="col-md-6 col-lg-4">
+        <div class="dashboard-card">
+          <div class="card-icon"><i class="bi bi-calendar-check"></i></div>
+          <h3>Book Consultation</h3>
+          <p>Schedule online or physical consultations with specialists.</p>
+          <a routerLink="/patient/consultation-booking" class="btn btn-primary mt-3">Book Now</a>
+        </div>
+      </div>
+
+      <!-- Request Ambulance -->
+      <div class="col-md-6 col-lg-4">
+        <div class="dashboard-card">
+          <div class="card-icon"><i class="bi bi-truck-flatbed"></i></div>
+          <h3>Request Ambulance</h3>
+          <p>Patient transport, hospital transfers, or event standby.</p>
+          <a routerLink="/patient/ambulance-request" class="btn btn-danger mt-3">Request Now</a>
+        </div>
+      </div>
+
+      <!-- View Bookings -->
+      <div class="col-md-6 col-lg-4">
+        <div class="dashboard-card">
+          <div class="card-icon"><i class="bi bi-list-check"></i></div>
+          <h3>View Booking History</h3>
+          <p>Review your past consultations and ambulance requests.</p>
+          <button class="btn btn-outline-light mt-3" disabled>Coming Soon</button>
+        </div>
+      </div>
+
+      <!-- Notifications -->
+      <div class="col-md-6 col-lg-4">
+        <div class="dashboard-card">
+          <div class="card-icon"><i class="bi bi-bell-fill"></i></div>
+          <h3>Notifications</h3>
+          <p>Stay updated on bookings, payments, and health tips.</p>
+          <button class="btn btn-outline-light mt-3" disabled>Coming Soon</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-footer></app-footer>

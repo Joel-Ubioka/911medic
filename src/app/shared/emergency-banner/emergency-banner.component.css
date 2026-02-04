@@ -1,0 +1,81 @@
+/* EMERGENCY BANNER - Premium with Video */
+.emergency-banner {
+  background: #0a1f44;
+  position: relative;
+}
+
+.emergency-bg {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, #dc3545 0%, #c0392b 50%, #dc3545 100%);
+  opacity: 0.85;
+  z-index: 1;
+}
+
+.emergency-banner .container {
+  z-index: 2;
+}
+
+/* Video Container */
+.emergency-video-container {
+  position: relative;
+  overflow: hidden;
+  border-radius: 20px;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  transform: translateX(-40px);
+  transition: opacity 1s ease-out, transform 1s ease-out;
+}
+
+.emergency-video-container.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.emergency-video {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+}
+
+.video-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.5s;
+}
+
+.video-overlay.playing {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.video-play-btn {
+  width: 80px;
+  height: 80px;
+  font-size: 2rem;
+  opacity: 0.9;
+  transition: all 0.3s;
+}
+
+.video-play-btn:hover {
+  transform: scale(1.1);
+}
+
+/* Right Content (same as before) */
+.emergency-content {
+  opacity: 0;
+  transform: translateX(40px);
+  transition: opacity 1s ease-out, transform 1s ease-out;
+}
+
+.emergency-content.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* ... (keep the rest of your existing button, icon, and responsive styles) */
