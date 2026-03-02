@@ -1,0 +1,175 @@
+<div class="detailed-reports py-4 py-md-5 position-relative">
+  <div class="analytics-bg"></div>
+
+  <div class="container position-relative z-2">
+    <!-- Header -->
+    <div class="d-flex justify-content-between align-items-center mb-5 flex-wrap gap-3">
+      <div>
+        <h2 class="fw-bold display-5 text-white mb-1">Detailed Reports</h2>
+        <small class="d-block fs-6 text-white-50">
+          Comprehensive analytics and exportable reports
+        </small>
+      </div>
+    </div>
+
+    <!-- Date Range Filter -->
+    <div class="row g-3 mb-5 align-items-end">
+      <div class="col-md-4">
+        <label class="text-white-75 mb-1">Start Date</label>
+        <input type="date" class="form-control bg-dark text-light border-secondary" [(ngModel)]="startDate">
+      </div>
+      <div class="col-md-4">
+        <label class="text-white-75 mb-1">End Date</label>
+        <input type="date" class="form-control bg-dark text-light border-secondary" [(ngModel)]="endDate">
+      </div>
+      <div class="col-md-4 d-flex gap-2">
+        <button class="btn btn-primary" (click)="applyDateFilter()">Apply Filter</button>
+        <button class="btn btn-success" (click)="exportToCSV()"><i class="bi bi-file-earmark-spreadsheet me-1"></i>CSV</button>
+        <button class="btn btn-danger" (click)="exportToPDF()"><i class="bi bi-file-earmark-pdf me-1"></i>PDF</button>
+      </div>
+    </div>
+
+    <!-- Summary Cards -->
+    <div class="row g-4 mb-5">
+      <div class="col-md-3">
+        <div class="metric-card dashboard-card">
+          <div class="d-flex align-items-center justify-content-between">
+            <div>
+              <h6 class="text-white-75 mb-1 small">Total Consultations</h6>
+              <h3 class="fw-bold text-white mb-0">{{ totalConsultations }}</h3>
+            </div>
+            <i class="bi bi-calendar-check card-icon text-primary"></i>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="metric-card dashboard-card">
+          <div class="d-flex align-items-center justify-content-between">
+            <div>
+              <h6 class="text-white-75 mb-1 small">Total Revenue</h6>
+              <h3 class="fw-bold text-white mb-0">₦{{ totalRevenue | number:'1.0-0' }}</h3>
+            </div>
+            <i class="bi bi-currency-dollar card-icon text-success"></i>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="metric-card dashboard-card">
+          <div class="d-flex align-items-center justify-content-between">
+            <div>
+              <h6 class="text-white-75 mb-1 small">Total Patients</h6>
+              <h3 class="fw-bold text-white mb-0">{{ totalPatients }}</h3>
+            </div>
+            <i class="bi bi-people-fill card-icon text-info"></i>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="metric-card dashboard-card">
+          <div class="d-flex align-items-center justify-content-between">
+            <div>
+              <h6 class="text-white-75 mb-1 small">Total Specialists</h6>
+              <h3 class="fw-bold text-white mb-0">{{ totalSpecialists }}</h3>
+            </div>
+            <i class="bi bi-person-badge card-icon text-warning"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Charts Row -->
+    <div class="row g-4 mb-5">
+      <div class="col-lg-6">
+        <div class="dashboard-card chart-card">
+          <h5 class="fw-bold text-white mb-4"><i class="bi bi-graph-up-arrow me-2"></i>Monthly Revenue Trend</h5>
+          <div class="chart-container">
+            <canvas baseChart [data]="lineChartData" [options]="lineChartOptions" [type]="lineChartType"></canvas>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="dashboard-card">
+          <h5 class="fw-bold text-white mb-4"><i class="bi bi-table me-2"></i>Monthly Revenue Table</h5>
+          <div class="table-responsive">
+            <table class="table table-dark table-hover">
+              <thead>
+                <tr class="text-primary">
+                  <th>Month</th>
+                  <th>Revenue (₦)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of revenueByMonth">
+                  <td>{{ item.month }}</td>
+                  <td>{{ item.revenue | number:'1.0-0' }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Recent Consultations Table -->
+    <div class="row g-4">
+      <div class="col-12">
+        <div class="dashboard-card">
+          <h5 class="fw-bold text-white mb-4"><i class="bi bi-list-check me-2"></i>Recent Consultations</h5>
+          <div class="table-responsive">
+            <table class="table table-dark table-hover">
+              <thead>
+                <tr class="text-primary">
+                  <th>Patient</th>
+                  <th>Specialist</th>
+                  <th>Date</th>
+                  <th>Amount (₦)</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of recentConsultations">
+                  <td>{{ item.patient }}</td>
+                  <td>{{ item.specialist }}</td>
+                  <td>{{ item.date }}</td>
+                  <td>{{ item.amount | number:'1.0-0' }}</td>
+                  <td><span class="badge" [ngClass]="{'bg-success': item.status === 'completed', 'bg-warning': item.status === 'pending', 'bg-info': item.status === 'ongoing'}">{{ item.status }}</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Top Specialists Table -->
+    <div class="row g-4 mt-4">
+      <div class="col-12">
+        <div class="dashboard-card">
+          <h5 class="fw-bold text-white mb-4"><i class="bi bi-trophy-fill me-2 text-warning"></i>Top Specialists</h5>
+          <div class="table-responsive">
+            <table class="table table-dark table-hover">
+              <thead>
+                <tr class="text-primary">
+                  <th>Name</th>
+                  <th>Specialty</th>
+                  <th>Consultations</th>
+                  <th>Rating</th>
+                  <th>Revenue (₦)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let spec of topSpecialists">
+                  <td>{{ spec.name }}</td>
+                  <td>{{ spec.specialty }}</td>
+                  <td>{{ spec.consultations }}</td>
+                  <td>{{ spec.rating }} <i class="bi bi-star-fill text-warning"></i></td>
+                  <td>{{ spec.revenue | number:'1.0-0' }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

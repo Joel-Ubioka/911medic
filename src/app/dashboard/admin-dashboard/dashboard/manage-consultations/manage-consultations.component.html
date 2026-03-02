@@ -1,0 +1,190 @@
+<div class="manage-consultations py-4 py-md-5 position-relative">
+  <div class="analytics-bg"></div>
+
+  <div class="container position-relative z-2">
+    <!-- Header -->
+    <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-3">
+      <div>
+        <h2 class="fw-bold display-5 text-white mb-1">Manage Consultations</h2>
+        <small class="d-block fs-6 text-white-50">
+          View and manage all consultation requests
+        </small>
+      </div>
+      <span class="badge bg-info bg-opacity-75">
+        Total: {{ consultations.length }}
+      </span>
+    </div>
+
+    <!-- Filters -->
+    <div class="row g-3 mb-4">
+      <div class="col-md-4">
+        <select class="form-select bg-dark text-light border-secondary" [(ngModel)]="statusFilter" (change)="applyFilters()">
+          <option value="all">All Statuses</option>
+          <option value="pending">Pending</option>
+          <option value="ongoing">Ongoing</option>
+          <option value="completed">Completed</option>
+          <option value="cancelled">Cancelled</option>
+        </select>
+      </div>
+      <div class="col-md-6">
+        <input type="text" class="form-control bg-light text-dark border-secondary" placeholder="Search by patient, specialist, email, phone..." [(ngModel)]="searchTerm" (input)="applyFilters()">
+      </div>
+      <div class="col-md-2">
+        <button class="btn btn-outline-secondary w-100" (click)="clearFilters()">Clear</button>
+      </div>
+    </div>
+
+    <!-- Loading & Error States -->
+    <div *ngIf="loading" class="text-center py-5">
+      <div class="spinner-border text-primary spinner-grow-lg" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+      <p class="text-white-50 mt-3">Fetching consultations...</p>
+    </div>
+
+    <div *ngIf="error" class="alert alert-danger text-center">
+      Failed to load consultations. Please try again.
+    </div>
+
+    <!-- Consultations Table -->
+    <div *ngIf="!loading && !error" class="table-responsive">
+      <table class="table table-dark table-hover">
+        <thead>
+          <tr class="text-primary">
+            <th>Patient</th>
+            <th>Specialist</th>
+            <th>Type</th>
+            <th>Status</th>
+            <th>Payment</th>
+            <th>Requested</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let consult of filteredConsultations">
+            <td>
+              <div>{{ consult.patientName }}</div>
+              <small class="text-white-50">{{ consult.patientPhone }}</small>
+            </td>
+            <td>{{ consult.specialist }}</td>
+            <td>{{ consult.consultationType }}</td>
+            <td>
+              <span class="badge" [ngClass]="getStatusClass(consult.status)">
+                {{ consult.status | titlecase }}
+              </span>
+            </td>
+            <td>
+              <span class="badge" [ngClass]="getPaymentStatusClass(consult.paymentStatus)">
+                {{ consult.paymentStatus | titlecase }}
+              </span>
+            </td>
+            <td>{{ consult.requestedAt | date:'short' }}</td>
+            <td>
+              <div class="d-flex gap-2">
+                <button class="btn btn-sm btn-outline-info" (click)="viewDetails(consult)">
+                  <i class="bi bi-eye"></i>
+                </button>
+                <button *ngIf="role === 'owner' && consult.paymentStatus === 'unconfirmed'" class="btn btn-sm btn-success" (click)="goToPaymentPage()">
+                  <i class="bi bi-credit-card"></i>
+                </button>
+                <!-- Additional actions can be added -->
+              </div>
+            </td>
+          </tr>
+          <tr *ngIf="filteredConsultations.length === 0">
+            <td colspan="7" class="text-center text-white-50 py-4">
+              No consultations found.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- Consultation Details Modal -->
+<div class="modal fade" [class.show]="showDetailsModal" [style.display]="showDetailsModal ? 'block' : 'none'" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content bg-dark text-light border-secondary">
+      <div class="modal-header border-secondary">
+        <h5 class="modal-title">
+          <i class="bi bi-file-text me-2"></i> Consultation Details
+        </h5>
+        <button type="button" class="btn-close btn-close-white" (click)="closeDetailsModal()"></button>
+      </div>
+      <div class="modal-body" *ngIf="selectedConsultation">
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <h6 class="text-primary mb-3">Patient Information</h6>
+            <p><strong>Name:</strong> {{ selectedConsultation.patientName }}</p>
+            <p><strong>Email:</strong> {{ selectedConsultation.patientEmail }}</p>
+            <p><strong>Phone:</strong> {{ selectedConsultation.patientPhone }}</p>
+            <p><strong>Age:</strong> {{ selectedConsultation.age }}</p>
+            <p><strong>Gender:</strong> {{ selectedConsultation.gender }}</p>
+            <p><strong>Location:</strong> {{ selectedConsultation.location }}</p>
+            <p *ngIf="selectedConsultation.forWhom === 'other'">
+              <strong>For:</strong> {{ selectedConsultation.otherPerson }}
+            </p>
+          </div>
+          <div class="col-md-6 mb-3">
+            <h6 class="text-primary mb-3">Consultation Details</h6>
+            <p><strong>Specialist:</strong> {{ selectedConsultation.specialist }} ({{ selectedConsultation.specialty }})</p>
+            <p><strong>Type:</strong> {{ selectedConsultation.consultationType }}</p>
+            <p><strong>Timeframe:</strong> {{ selectedConsultation.timeframe | titlecase }}</p>
+            <p><strong>Appointment:</strong> {{ selectedConsultation.appointmentTime ? (selectedConsultation.appointmentTime | date:'medium') : 'Not set' }}</p>
+            <p><strong>Status:</strong> <span class="badge" [ngClass]="getStatusClass(selectedConsultation.status)">{{ selectedConsultation.status | titlecase }}</span></p>
+          </div>
+        </div>
+
+        <hr class="border-secondary" />
+
+        <div class="row">
+          <div class="col-md-6">
+            <h6 class="text-primary mb-3">Payment Information</h6>
+            <p><strong>Amount:</strong> ₦{{ selectedConsultation.amount | number:'1.0-0' }}</p>
+            <p><strong>Method:</strong> {{ selectedConsultation.paymentMethod === 'bank-transfer' ? 'Bank Transfer' : 'Paystack/Flutterwave' }}</p>
+            <p><strong>Status:</strong> <span class="badge" [ngClass]="getPaymentStatusClass(selectedConsultation.paymentStatus)">{{ selectedConsultation.paymentStatus | titlecase }}</span></p>
+            <p *ngIf="selectedConsultation.receipt"><strong>Receipt:</strong> {{ selectedConsultation.receipt }}</p>
+          </div>
+          <div class="col-md-6">
+            <h6 class="text-primary mb-3">Timeline</h6>
+            <p><strong>Requested:</strong> {{ selectedConsultation.requestedAt | date:'medium' }}</p>
+            <p *ngIf="selectedConsultation.appointmentTime"><strong>Scheduled:</strong> {{ selectedConsultation.appointmentTime | date:'medium' }}</p>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer border-secondary">
+        <button type="button" class="btn btn-secondary" (click)="closeDetailsModal()">Close</button>
+        <button *ngIf="role === 'owner' && selectedConsultation?.paymentStatus === 'unconfirmed'" class="btn btn-success" (click)="confirmPayment(selectedConsultation); closeDetailsModal()">
+          <i class="bi bi-credit-card me-1"></i> Confirm Payment
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Payment Confirmation Modal -->
+<div class="modal fade" [class.show]="showPaymentModal" [style.display]="showPaymentModal ? 'block' : 'none'" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content bg-dark text-light border-secondary">
+      <div class="modal-header border-secondary">
+        <h5 class="modal-title">
+          <i class="bi bi-exclamation-triangle-fill text-warning me-2"></i> Confirm Payment
+        </h5>
+        <button type="button" class="btn-close btn-close-white" (click)="closePaymentModal()"></button>
+      </div>
+      <div class="modal-body" *ngIf="paymentToConfirm">
+        <p>Are you sure you want to confirm payment for:</p>
+        <p class="fw-bold">{{ paymentToConfirm.patientName }} – ₦{{ paymentToConfirm.amount | number:'1.0-0' }}</p>
+        <p class="text-white-50 small">This action cannot be undone.</p>
+      </div>
+      <div class="modal-footer border-secondary">
+        <button type="button" class="btn btn-secondary" (click)="closePaymentModal()">Cancel</button>
+        <button type="button" class="btn btn-success" (click)="processPaymentConfirmation()">Confirm Payment</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Backdrops -->
+<div class="modal-backdrop fade" [class.show]="showDetailsModal || showPaymentModal" [style.display]="(showDetailsModal || showPaymentModal) ? 'block' : 'none'"></div>

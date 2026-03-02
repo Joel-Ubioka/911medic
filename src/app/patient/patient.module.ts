@@ -10,7 +10,7 @@ import { ConsultationBookingComponent } from './consultation-booking/consultatio
 import { AmbulanceRequestComponent } from './ambulance-request/ambulance-request.component';
 // Import your SharedModule here
 import { SharedModule } from '../shared/shared.module';
-import { PaystackService } from '../core/services/paystack.service';
+import { PaystackService } from '../core/services/paystack/paystack.service';
 
 @NgModule({
   declarations: [
@@ -18,14 +18,14 @@ import { PaystackService } from '../core/services/paystack.service';
     PatientLoginComponent,
     PatientRegisterComponent,
     ConsultationBookingComponent,
-    AmbulanceRequestComponent
+    AmbulanceRequestComponent,
   ],
   imports: [
     CommonModule,
     ReactiveFormsModule,
     PatientRoutingModule,
-    SharedModule
+    SharedModule,
   ],
-  providers: [PaystackService]
+  providers: [PaystackService],
 })
-export class PatientModule { }
+export class PatientModule {}

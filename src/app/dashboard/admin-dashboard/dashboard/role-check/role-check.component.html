@@ -1,0 +1,26 @@
+<app-navbar></app-navbar>
+
+<div
+  class="role-check-overlay d-flex align-items-center justify-content-center min-vh-100 position-fixed top-0 start-0 w-100 h-100 bg-dark bg-opacity-75 z-3"
+>
+  <div
+    class="role-check-card bg-dark text-light p-5 rounded-3 shadow-lg"
+    style="max-width: 400px"
+  >
+    <h3 class="text-center mb-4">Select Your Role</h3>
+    <p class="text-center text-white-75 mb-4">
+      Please choose your admin role to access the dashboard.
+    </p>
+    <div class="d-grid gap-3">
+      <button (click)="selectRole('owner')" class="btn btn-primary btn-lg">
+        Owner
+      </button>
+      <button (click)="selectRole('staff')" class="btn btn-secondary btn-lg">
+        Staff
+      </button>
+    </div>
+  </div>
+</div>
+
+
+<app-footer></app-footer>

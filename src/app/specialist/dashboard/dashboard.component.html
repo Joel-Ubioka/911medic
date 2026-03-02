@@ -9,7 +9,7 @@
     <!-- Header -->
     <div class="text-center mb-5">
       <h1 class="display-4 fw-bold mb-4 text-white">
-        Welcome, Dr. {{ currentSpecialist?.fullName || "Specialist" }}!
+        Welcome, {{ currentSpecialist?.fullName || "Specialist" }}!
       </h1>
       <p class="lead text-white-75 mb-4">
         Manage your consultations, availability, and patient interactions.
@@ -212,8 +212,11 @@
           <div class="card-icon"><i class="bi bi-person-gear"></i></div>
           <h3>Manage Profile</h3>
           <p>Update your professional information and specialization.</p>
-          <button class="btn btn-outline-light mt-3" disabled>
-            Coming Soon
+          <button
+            class="btn btn-outline-light mt-3"
+            (click)="openManageProfileModal()"
+          >
+            View & Edit
           </button>
         </div>
       </div>
@@ -223,8 +226,11 @@
           <div class="card-icon"><i class="bi bi-graph-up"></i></div>
           <h3>View Statistics</h3>
           <p>Track your consultation statistics and ratings.</p>
-          <button class="btn btn-outline-light mt-3" disabled>
-            Coming Soon
+          <button
+            class="btn btn-outline-light mt-3"
+            (click)="openStatisticsModal()"
+          >
+            View Stats
           </button>
         </div>
       </div>
@@ -234,8 +240,11 @@
           <div class="card-icon"><i class="bi bi-chat-dots-fill"></i></div>
           <h3>Messages</h3>
           <p>Communicate with patients regarding consultations.</p>
-          <button class="btn btn-outline-light mt-3" disabled>
-            Coming Soon
+          <button
+            class="btn btn-outline-light mt-3"
+            (click)="openMessagesModal()"
+          >
+            View Messages
           </button>
         </div>
       </div>
@@ -244,3 +253,521 @@
 </div>
 
 <app-footer></app-footer>
+
+<!-- Manage Profile Modal -->
+<div
+  class="modal fade"
+  [class.show]="showManageProfileModal"
+  [ngStyle]="{ display: showManageProfileModal ? 'block' : 'none' }"
+  tabindex="-1"
+  role="dialog"
+>
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content bg-dark text-light border-secondary">
+      <div class="modal-header border-secondary">
+        <h5 class="modal-title">
+          <i class="bi bi-person-gear"></i> Manage Profile
+        </h5>
+        <button
+          type="button"
+          class="btn-close btn-close-white"
+          (click)="closeManageProfileModal()"
+        ></button>
+      </div>
+      <div class="modal-body" *ngIf="profileData">
+        <div class="profile-section mb-4">
+          <h6 class="text-primary mb-3">Personal Information</h6>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group mb-3">
+                <label class="form-label">Full Name</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  [(ngModel)]="profileData.fullName"
+                />
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group mb-3">
+                <label class="form-label">Speciality</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  [(ngModel)]="profileData.speciality"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="form-group mb-3">
+            <label class="form-label">Qualifications</label>
+            <textarea
+              class="form-control"
+              [(ngModel)]="profileData.qualifications"
+              rows="2"
+            ></textarea>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group mb-3">
+                <label class="form-label">Years of Experience</label>
+                <input
+                  type="number"
+                  class="form-control"
+                  [(ngModel)]="profileData.yearsOfExperience"
+                />
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group mb-3">
+                <label class="form-label">License Number</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  [(ngModel)]="profileData.licenseNumber"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <hr class="border-secondary" />
+
+        <div class="profile-section mb-4">
+          <h6 class="text-primary mb-3">Professional Details</h6>
+          <div class="form-group mb-3">
+            <label class="form-label">Hospital / Clinic</label>
+            <input
+              type="text"
+              class="form-control"
+              [(ngModel)]="profileData.hospital"
+            />
+          </div>
+          <div class="form-group mb-3">
+            <label class="form-label">Professional Bio</label>
+            <textarea
+              class="form-control"
+              [(ngModel)]="profileData.bio"
+              rows="3"
+            ></textarea>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group mb-3">
+                <label class="form-label">Consultation Fee (₦)</label>
+                <input
+                  type="number"
+                  class="form-control"
+                  [(ngModel)]="profileData.consultationFee"
+                />
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group mb-3">
+                <label class="form-label">Rating</label>
+                <input
+                  type="number"
+                  class="form-control"
+                  [(ngModel)]="profileData.rating"
+                  step="0.1"
+                  max="5"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer border-secondary">
+        <button
+          type="button"
+          class="btn btn-secondary"
+          (click)="closeManageProfileModal()"
+        >
+          Close
+        </button>
+        <button
+          type="button"
+          class="btn btn-primary"
+          (click)="saveProfileChanges()"
+        >
+          Save Changes
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- View Statistics Modal -->
+<div
+  class="modal fade"
+  [class.show]="showStatisticsModal"
+  [ngStyle]="{ display: showStatisticsModal ? 'block' : 'none' }"
+  tabindex="-1"
+  role="dialog"
+>
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content bg-dark text-light border-secondary">
+      <div class="modal-header border-secondary">
+        <h5 class="modal-title">
+          <i class="bi bi-graph-up"></i> Consultation Statistics
+        </h5>
+        <button
+          type="button"
+          class="btn-close btn-close-white"
+          (click)="closeStatisticsModal()"
+        ></button>
+      </div>
+      <div class="modal-body" *ngIf="statisticsData">
+        <div class="row mb-4">
+          <div class="col-md-6 col-lg-3">
+            <div class="stat-card text-center">
+              <div class="stat-value text-success">
+                {{ statisticsData.totalConsultations }}
+              </div>
+              <div class="stat-label">Total Consultations</div>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-3">
+            <div class="stat-card text-center">
+              <div class="stat-value text-info">
+                {{ statisticsData.completedConsultations }}
+              </div>
+              <div class="stat-label">Completed</div>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-3">
+            <div class="stat-card text-center">
+              <div class="stat-value text-warning">
+                {{ statisticsData.pendingConsultations }}
+              </div>
+              <div class="stat-label">Pending</div>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-3">
+            <div class="stat-card text-center">
+              <div class="stat-value text-danger">
+                {{ statisticsData.cancelledConsultations }}
+              </div>
+              <div class="stat-label">Cancelled</div>
+            </div>
+          </div>
+        </div>
+
+        <hr class="border-secondary" />
+
+        <div class="row mb-4">
+          <div class="col-md-6">
+            <h6 class="text-primary mb-3">Performance Metrics</h6>
+            <div class="metric-item mb-2">
+              <div class="metric-label">Average Rating</div>
+              <div class="metric-value">
+                <span class="badge bg-success"
+                  >{{ statisticsData.averageRating }}/5.0</span
+                >
+              </div>
+            </div>
+            <div class="metric-item mb-2">
+              <div class="metric-label">Total Reviews</div>
+              <div class="metric-value">
+                {{ statisticsData.totalReviews }} reviews
+              </div>
+            </div>
+            <div class="metric-item mb-2">
+              <div class="metric-label">Patient Satisfaction</div>
+              <div class="metric-value">
+                <span class="badge bg-info"
+                  >{{ statisticsData.patientSatisfaction }}%</span
+                >
+              </div>
+            </div>
+            <div class="metric-item">
+              <div class="metric-label">On-Time Rate</div>
+              <div class="metric-value">
+                <span class="badge bg-success"
+                  >{{ statisticsData.onTimeRate }}%</span
+                >
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <h6 class="text-primary mb-3">Growth & Revenue</h6>
+            <div class="metric-item mb-2">
+              <div class="metric-label">Monthly Growth</div>
+              <div class="metric-value text-success">
+                +{{ statisticsData.monthlyGrowth }}%
+              </div>
+            </div>
+            <div class="metric-item mb-2">
+              <div class="metric-label">Revenue This Month</div>
+              <div class="metric-value">
+                ₦{{ statisticsData.revenueThisMonth.toLocaleString() }}
+              </div>
+            </div>
+            <div class="metric-item mb-2">
+              <div class="metric-label">This Month Consultations</div>
+              <div class="metric-value">
+                {{ statisticsData.thisMonthConsultations }}
+              </div>
+            </div>
+            <div class="metric-item">
+              <div class="metric-label">Year-over-Year Growth</div>
+              <div class="metric-value text-success">
+                +{{ statisticsData.yearOverYearGrowth }}%
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <hr class="border-secondary" />
+
+        <h6 class="text-primary mb-3">Top Complaint Types</h6>
+        <div class="complaint-list">
+          <div
+            *ngFor="let complaint of statisticsData.topComplaintTypes"
+            class="complaint-item mb-2"
+          >
+            <div class="d-flex justify-content-between align-items-center">
+              <span>{{ complaint.type }}</span>
+              <div>
+                <span class="badge bg-secondary me-2"
+                  >{{ complaint.count }} cases</span
+                >
+                <span class="badge bg-primary"
+                  >{{ complaint.percentage }}%</span
+                >
+              </div>
+            </div>
+            <div class="progress mt-1" style="height: 5px">
+              <div
+                class="progress-bar bg-info"
+                [style.width.%]="complaint.percentage"
+              ></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer border-secondary">
+        <button
+          type="button"
+          class="btn btn-secondary"
+          (click)="closeStatisticsModal()"
+        >
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Messages Modal -->
+<div
+  class="modal fade"
+  [class.show]="showMessagesModal"
+  [ngStyle]="{ display: showMessagesModal ? 'block' : 'none' }"
+  tabindex="-1"
+  role="dialog"
+>
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content bg-dark text-light border-secondary">
+      <div class="modal-header border-secondary">
+        <h5 class="modal-title">
+          <i class="bi bi-chat-dots-fill"></i> Messages
+        </h5>
+        <button
+          type="button"
+          class="btn-close btn-close-white"
+          (click)="closeMessagesModal()"
+        ></button>
+      </div>
+      <div class="modal-body message-list" *ngIf="messagesData.length > 0">
+        <div
+          *ngFor="let message of messagesData"
+          class="message-item mb-3 p-3 border rounded"
+        >
+          <div class="d-flex align-items-center gap-3">
+            <div class="message-avatar" style="font-size: 2rem">
+              {{ message.patientImage }}
+            </div>
+            <div class="flex-grow-1">
+              <div
+                class="d-flex justify-content-between align-items-start mb-2"
+              >
+                <h6 class="text-white mb-0">{{ message.patientName }}</h6>
+                <span
+                  class="badge"
+                  [ngClass]="
+                    message.status === 'online' ? 'bg-success' : 'bg-secondary'
+                  "
+                >
+                  {{ message.status }}
+                </span>
+              </div>
+              <p class="text-white-75 mb-2">{{ message.lastMessage }}</p>
+              <small class="text-secondary">
+                {{ message.timestamp | date: "short" }}
+              </small>
+            </div>
+            <div *ngIf="message.unread" class="unread-indicator">
+              <span class="badge bg-primary">Unread</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer border-secondary">
+        <button
+          type="button"
+          class="btn btn-secondary"
+          (click)="closeMessagesModal()"
+        >
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Backdrops -->
+<div
+  class="modal-backdrop fade"
+  [class.show]="
+    showManageProfileModal || showStatisticsModal || showMessagesModal
+  "
+  [ngStyle]="{
+    display:
+      showManageProfileModal || showStatisticsModal || showMessagesModal
+        ? 'block'
+        : 'none',
+  }"
+></div>
+
+<!-- Patient Details Modal -->
+<div
+  class="modal fade"
+  [class.show]="showPatientDetailsModal"
+  [ngStyle]="{ display: showPatientDetailsModal ? 'block' : 'none' }"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="patientDetailsModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content bg-dark text-light border-secondary">
+      <div class="modal-header border-secondary">
+        <h5 class="modal-title" id="patientDetailsModalLabel">
+          <i class="bi bi-person-circle"></i> Patient Details
+        </h5>
+        <button
+          type="button"
+          class="btn-close btn-close-white"
+          (click)="closePatientDetailsModal()"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body" *ngIf="selectedConsultationForModal">
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <h6 class="text-primary mb-2">Personal Information</h6>
+            <div class="patient-detail-item">
+              <label class="text-secondary">Full Name</label>
+              <p class="text-white">
+                {{ selectedConsultationForModal.fullName }}
+              </p>
+            </div>
+            <div class="patient-detail-item">
+              <label class="text-secondary">Age</label>
+              <p class="text-white">{{ selectedConsultationForModal.age }}</p>
+            </div>
+            <div class="patient-detail-item">
+              <label class="text-secondary">Gender</label>
+              <p class="text-white">
+                {{ selectedConsultationForModal.gender }}
+              </p>
+            </div>
+          </div>
+
+          <div class="col-md-6 mb-3">
+            <h6 class="text-primary mb-2">Contact Information</h6>
+            <div class="patient-detail-item">
+              <label class="text-secondary">Email</label>
+              <p class="text-white">
+                <i class="bi bi-envelope"></i>
+                {{ selectedConsultationForModal.email }}
+              </p>
+            </div>
+            <div class="patient-detail-item">
+              <label class="text-secondary">Phone Number</label>
+              <p class="text-white">
+                <i class="bi bi-telephone"></i>
+                {{ selectedConsultationForModal.phone }}
+              </p>
+            </div>
+            <div class="patient-detail-item">
+              <label class="text-secondary">Location</label>
+              <p class="text-white">
+                <i class="bi bi-geo-alt"></i>
+                {{ selectedConsultationForModal.location }}
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <hr class="border-secondary" />
+
+        <div class="row">
+          <div class="col-12 mb-3">
+            <h6 class="text-primary mb-2">Consultation Details</h6>
+            <div class="patient-detail-item">
+              <label class="text-secondary">Consultation Type</label>
+              <p class="text-white">
+                <span
+                  class="badge"
+                  [ngClass]="
+                    selectedConsultationForModal.consultationType === 'Online'
+                      ? 'bg-info'
+                      : 'bg-warning'
+                  "
+                >
+                  {{ selectedConsultationForModal.consultationType }}
+                </span>
+              </p>
+            </div>
+            <div class="patient-detail-item">
+              <label class="text-secondary">Appointment Time</label>
+              <p class="text-white">
+                <i class="bi bi-calendar-event"></i>
+                {{
+                  selectedConsultationForModal.appointmentTime | date: "medium"
+                }}
+              </p>
+            </div>
+            <div class="patient-detail-item">
+              <label class="text-secondary">Medical Description</label>
+              <p class="text-white">
+                {{
+                  selectedConsultationForModal.description ||
+                    "No description provided"
+                }}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer border-secondary">
+        <button
+          type="button"
+          class="btn btn-secondary"
+          (click)="closePatientDetailsModal()"
+        >
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Backdrop -->
+<div
+  class="modal-backdrop fade"
+  [class.show]="showPatientDetailsModal"
+  [ngStyle]="{ display: showPatientDetailsModal ? 'block' : 'none' }"
+></div>

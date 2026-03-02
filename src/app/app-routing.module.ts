@@ -25,6 +25,11 @@ const routes: Routes = [
     loadChildren: () =>
       import('./specialist/specialist.module').then(m => m.SpecialistModule)
   },
+  {
+    path: 'admin',
+    loadChildren: () =>
+      import('./dashboard/admin-dashboard/admin-dashboard.module').then(m => m.AdminDashboardModule)
+  },
 
   // Fallback
   {

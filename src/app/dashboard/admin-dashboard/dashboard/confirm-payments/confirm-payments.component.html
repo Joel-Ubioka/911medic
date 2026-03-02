@@ -1,0 +1,99 @@
+<div class="confirm-payments py-4 py-md-5 position-relative">
+  <div class="analytics-bg"></div>
+
+  <div class="container position-relative z-2">
+    <!-- Header -->
+    <div class="d-flex justify-content-between align-items-center mb-5 flex-wrap gap-3">
+      <div>
+        <h2 class="fw-bold display-5 text-white mb-1">Confirm Payments</h2>
+        <small class="d-block fs-6 text-white-50">
+          Review and confirm pending payments from consultations
+        </small>
+      </div>
+      <span class="badge bg-success bg-opacity-75">
+        {{ filteredPayments.length }} Pending
+      </span>
+    </div>
+
+    <!-- Loading & Error States -->
+    <div *ngIf="loading" class="text-center py-5">
+      <div class="spinner-border text-primary spinner-grow-lg" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+      <p class="text-white-50 mt-3">Fetching payments...</p>
+    </div>
+
+    <div *ngIf="error" class="alert alert-danger text-center">
+      Failed to load payments. Please try again.
+    </div>
+
+    <!-- Payments List -->
+    <div *ngIf="!loading && !error">
+      <div *ngIf="filteredPayments.length === 0" class="text-center text-white-50 py-5 bg-dark bg-opacity-25 rounded">
+        <i class="bi bi-check-circle-fill display-4 mb-3"></i>
+        <p>No pending payments. All payments confirmed!</p>
+      </div>
+
+      <div class="row g-4" *ngIf="filteredPayments.length > 0">
+        <div *ngFor="let payment of filteredPayments" class="col-md-6 col-lg-4">
+          <div class="payment-card dashboard-card h-100">
+            <div class="d-flex flex-column h-100">
+              <div class="d-flex justify-content-between align-items-start mb-3">
+                <div>
+                  <h5 class="text-white mb-1">{{ payment.patientName }}</h5>
+                  <span class="badge bg-info">{{ payment.consultationType }}</span>
+                </div>
+                <span class="badge bg-warning">Pending</span>
+              </div>
+
+              <p class="text-white-75 small mb-2">
+                <i class="bi bi-cash-stack me-1"></i> Amount: <strong>₦{{ payment.amount | number:'1.0-0' }}</strong>
+              </p>
+              <p class="text-white-75 small mb-2">
+                <i class="bi bi-person-badge me-1"></i> Specialist: {{ payment.specialist }}
+              </p>
+              <p class="text-white-75 small mb-3">
+                <i class="bi bi-calendar3 me-1"></i> Paid: {{ payment.paidAt | date:'mediumDate' }}
+              </p>
+              <p class="text-white-75 small mb-3">
+                <i class="bi bi-credit-card me-1"></i> Method: {{ payment.paymentMethod === 'bank-transfer' ? 'Bank Transfer' : 'Paystack/Flutterwave' }}
+              </p>
+
+              <div class="mt-auto">
+                <button class="btn btn-success w-100" (click)="openConfirmModal(payment)">
+                  <i class="bi bi-check-lg me-1"></i> Confirm Payment
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Confirmation Modal -->
+<div class="modal fade" [class.show]="showConfirmModal" [style.display]="showConfirmModal ? 'block' : 'none'" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content bg-dark text-light border-secondary">
+      <div class="modal-header border-secondary">
+        <h5 class="modal-title">
+          <i class="bi bi-exclamation-triangle-fill text-warning me-2"></i> Confirm Payment
+        </h5>
+        <button type="button" class="btn-close btn-close-white" (click)="closeConfirmModal()"></button>
+      </div>
+      <div class="modal-body" *ngIf="selectedPayment">
+        <p>Are you sure you want to confirm payment for:</p>
+        <p class="fw-bold">{{ selectedPayment.patientName }} – ₦{{ selectedPayment.amount | number:'1.0-0' }}</p>
+        <p class="text-white-50 small">This action will mark the payment as confirmed and cannot be undone.</p>
+      </div>
+      <div class="modal-footer border-secondary">
+        <button type="button" class="btn btn-secondary" (click)="closeConfirmModal()">Cancel</button>
+        <button type="button" class="btn btn-success" (click)="confirmPayment()">Confirm Payment</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Backdrop -->
+<div class="modal-backdrop fade" [class.show]="showConfirmModal" [style.display]="showConfirmModal ? 'block' : 'none'"></div>

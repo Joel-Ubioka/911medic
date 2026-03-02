@@ -1,0 +1,156 @@
+<div class="dispatch-ambulance py-4 py-md-5 position-relative">
+  <div class="analytics-bg"></div>
+
+  <div class="container position-relative z-2">
+    <!-- Header with success message -->
+    <div class="position-relative">
+      <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-3">
+        <div>
+          <h2 class="fw-bold display-5 text-white mb-1">Dispatch Ambulance</h2>
+          <small class="d-block fs-6 text-white-50">
+            Manage and dispatch ambulances for emergency requests
+          </small>
+        </div>
+        <span class="badge bg-danger bg-opacity-75">
+          {{ activeEmergencies.length }} Active
+        </span>
+      </div>
+
+      <!-- Success Toast/Alert -->
+      <div *ngIf="showSuccessMessage" class="alert alert-success alert-dismissible fade show position-absolute top-0 end-0 mt-2 me-2" role="alert" style="z-index: 1100;">
+        <i class="bi bi-check-circle-fill me-2"></i> {{ successMessageText }}
+        <button type="button" class="btn-close" (click)="showSuccessMessage=false"></button>
+      </div>
+    </div>
+
+    <!-- Loading & Error States -->
+    <div *ngIf="loading" class="text-center py-5">
+      <div class="spinner-border text-primary spinner-grow-lg" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+      <p class="text-white-50 mt-3">Fetching emergency requests...</p>
+    </div>
+
+    <div *ngIf="error" class="alert alert-danger text-center">
+      Failed to load emergency requests. Please try again.
+    </div>
+
+    <!-- Tabs -->
+    <ul class="nav nav-tabs border-secondary mb-4" *ngIf="!loading && !error">
+      <li class="nav-item">
+        <a class="nav-link" [class.active]="activeTab === 'active'" (click)="activeTab = 'active'" style="cursor: pointer;">
+          Active ({{ activeEmergencies.length }})
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" [class.active]="activeTab === 'dispatched'" (click)="activeTab = 'dispatched'" style="cursor: pointer;">
+          Dispatched ({{ dispatchedEmergencies.length }})
+        </a>
+      </li>
+    </ul>
+
+    <!-- Active Emergencies Tab -->
+    <div *ngIf="activeTab === 'active' && !loading && !error">
+      <div *ngIf="activeEmergencies.length === 0" class="text-center text-white-50 py-5 bg-dark bg-opacity-25 rounded">
+        <i class="bi bi-check-circle-fill display-4 mb-3"></i>
+        <p>No active emergency requests. All ambulances dispatched.</p>
+      </div>
+
+      <div class="row g-4" *ngIf="activeEmergencies.length > 0">
+        <div *ngFor="let emergency of activeEmergencies" class="col-md-6 col-lg-4">
+          <div class="emergency-card dashboard-card h-100">
+            <div class="d-flex flex-column h-100">
+              <div class="d-flex justify-content-between align-items-start mb-3">
+                <div>
+                  <h5 class="text-white mb-1">{{ emergency.fullName }}</h5>
+                  <span class="badge bg-danger">{{ emergency.type }}</span>
+                </div>
+                <span class="badge bg-warning">Active</span>
+              </div>
+
+              <p class="text-white-75 small mb-2">
+                <i class="bi bi-telephone me-1"></i> {{ emergency.phone }}
+              </p>
+              <p class="text-white-75 small mb-2">
+                <i class="bi bi-geo-alt me-1"></i> {{ emergency.location }}
+              </p>
+              <p class="text-white-75 small mb-2">
+                <i class="bi bi-clock me-1"></i> Reported: {{ emergency.reportedAt | date:'short' }}
+              </p>
+              <p class="text-white-75 small mb-2">
+                <i class="bi bi-credit-card me-1"></i> Payment: {{ getPaymentMethodDisplay(emergency.paymentMethod) }}
+              </p>
+              <p class="text-white-75 small mb-3">
+                <i class="bi bi-chat-left-text me-1"></i> {{ emergency.description }}
+              </p>
+
+              <div class="mt-auto">
+                <button class="btn btn-danger w-100" (click)="openDispatchModal(emergency)">
+                  <i class="bi bi-truck me-1"></i> Dispatch Ambulance
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Dispatched Emergencies Tab -->
+    <div *ngIf="activeTab === 'dispatched' && !loading && !error">
+      <div *ngIf="dispatchedEmergencies.length === 0" class="text-center text-white-50 py-5">
+        <p>No dispatched emergencies yet.</p>
+      </div>
+      <div class="row g-4" *ngIf="dispatchedEmergencies.length > 0">
+        <div *ngFor="let emergency of dispatchedEmergencies" class="col-md-6 col-lg-4">
+          <div class="emergency-card dashboard-card h-100">
+            <div class="d-flex justify-content-between align-items-start mb-3">
+              <div>
+                <h5 class="text-white mb-1">{{ emergency.fullName }}</h5>
+                <span class="badge bg-secondary">{{ emergency.type }}</span>
+              </div>
+              <span class="badge bg-success">Dispatched</span>
+            </div>
+            <p class="text-white-75 small mb-2">
+              <i class="bi bi-telephone me-1"></i> {{ emergency.phone }}
+            </p>
+            <p class="text-white-75 small mb-2">
+              <i class="bi bi-geo-alt me-1"></i> {{ emergency.location }}
+            </p>
+            <p class="text-white-75 small mb-2">
+              <i class="bi bi-clock me-1"></i> Reported: {{ emergency.reportedAt | date:'short' }}
+            </p>
+            <p class="text-white-75 small mb-2">
+              <i class="bi bi-truck me-1"></i> Dispatched: {{ emergency.dispatchedAt | date:'short' }}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Dispatch Confirmation Modal -->
+<div class="modal fade" [class.show]="showDispatchModal" [style.display]="showDispatchModal ? 'block' : 'none'" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content bg-dark text-light border-secondary">
+      <div class="modal-header border-secondary">
+        <h5 class="modal-title">
+          <i class="bi bi-exclamation-triangle-fill text-warning me-2"></i> Confirm Dispatch
+        </h5>
+        <button type="button" class="btn-close btn-close-white" (click)="closeDispatchModal()"></button>
+      </div>
+      <div class="modal-body" *ngIf="selectedEmergency">
+        <p>Are you sure you want to dispatch an ambulance for:</p>
+        <p class="fw-bold">{{ selectedEmergency.fullName }} – {{ selectedEmergency.location }}</p>
+        <p class="text-white-50 small">This action will mark the request as dispatched and cannot be undone.</p>
+      </div>
+      <div class="modal-footer border-secondary">
+        <button type="button" class="btn btn-secondary" (click)="closeDispatchModal()">Cancel</button>
+        <button type="button" class="btn btn-danger" (click)="dispatchAmbulance()">Dispatch Ambulance</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Backdrop -->
+<div class="modal-backdrop fade" [class.show]="showDispatchModal" [style.display]="showDispatchModal ? 'block' : 'none'"></div>

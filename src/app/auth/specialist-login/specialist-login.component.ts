@@ -39,30 +39,30 @@ export class SpecialistLoginComponent {
     this.isLoading = true;
     this.errorMessage = '';
 
-    const specialists = JSON.parse(localStorage.getItem('specialists') || '[]');
-    const found = specialists.find(
-      (s: any) =>
-        s.fullName.toLowerCase() === this.f['fullName'].value.toLowerCase() &&
-        s.email === this.f['email'].value &&
-        (s.speciality ? s.speciality === this.f['speciality'].value : true),
-    );
+    // const specialists = JSON.parse(localStorage.getItem('specialists') || '[]');
+    // const found = specialists.find(
+    //   (s: any) =>
+    //     s.fullName.toLowerCase() === this.f['fullName'].value.toLowerCase() &&
+    //     s.email === this.f['email'].value &&
+    //     (s.speciality ? s.speciality === this.f['speciality'].value : true),
+    // );
 
-    if (!found) {
-      this.errorMessage =
-        'Invalid credentials or not registered as a specialist.';
-      this.isLoading = false;
-      return;
-    }
+    // if (!found) {
+    //   this.errorMessage =
+    //     'Invalid credentials or not registered as a specialist.';
+    //   this.isLoading = false;
+    //   return;
+    // }
 
-    if (found.status && found.status !== 'approved') {
-      this.errorMessage =
-        'Your account is pending approval. You will be notified once approved.';
-      this.isLoading = false;
-      return;
-    }
+    // if (found.status && found.status !== 'approved') {
+    //   this.errorMessage =
+    //     'Your account is pending approval. You will be notified once approved.';
+    //   this.isLoading = false;
+    //   return;
+    // }
 
     // Login success
-    localStorage.setItem('currentSpecialist', JSON.stringify(found));
+    // localStorage.setItem('currentSpecialist', JSON.stringify(found));
     this.successMessage = 'Login successful! Redirecting to your dashboard...';
 
     setTimeout(() => {

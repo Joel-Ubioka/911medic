@@ -1,7 +1,7 @@
 import { Component, AfterViewInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { PaystackService } from 'src/app/core/services/paystack.service';
+import { PaystackService } from 'src/app/core/services/paystack/paystack.service';
 
 declare var bootstrap: any; // Declare bootstrap as global
 
